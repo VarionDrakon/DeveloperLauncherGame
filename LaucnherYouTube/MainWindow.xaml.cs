@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Handlers;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -138,7 +139,6 @@ namespace LaucnherYouTube
             ButtonReinstallApp.IsEnabled = true;
             clientDownloadApp.CancelAsync();
 
-            cancelTask = true;
             cancelTokenSource.Cancel();
         }
         private void ButtonLaunchGame(object sender, RoutedEventArgs rea)
@@ -255,62 +255,52 @@ namespace LaucnherYouTube
         #region UPDATEFUNC
         static CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
         CancellationToken token = cancelTokenSource.Token;
-        private bool cancelTask = false;
-        public async void ServerDownloadChacheGameAsync()
+        public void ServerDownloadChacheGameAsync()
         {
             try
             {
-                /*Task ahuet = new Task(() =>
+                Task ahuet = new Task(() =>
                 {
                     HttpRequestMessage httpRequestMessage = new HttpRequestMessage() { Method = HttpMethod.Get, RequestUri = new Uri("https://drive.google.com/uc?export=download&confirm=no_antivirus&id=10g0Vd_GWyt7VwF392q77NVBNibfGzQLi") };
                     ProgressMessageHandler progressMessageHandler = new ProgressMessageHandler(new HttpClientHandler() { AllowAutoRedirect = true });
                     httpClient = new HttpClient(progressMessageHandler) { Timeout = Timeout.InfiniteTimeSpan };
                     stopWatch.Start();
+                    progressMessageHandler.HttpReceiveProgress += ProgressMessageHandler_HttpReceiveProgress;
+
                     Stream result = httpClient.GetStreamAsync(httpRequestMessage.RequestUri).Result;
                     Stream fileStream = new FileStream(zipPath, FileMode.OpenOrCreate, FileAccess.Write);
 
-                    if (cancelTask == false)
-                    {
-                        httpClient.CancelPendingRequests();
-                        DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text = "Task пошёл нахуй");
-                        result.Close();
-                    }
-                    progressMessageHandler.HttpReceiveProgress += ProgressMessageHandler_HttpReceiveProgress;
                     result.CopyTo(fileStream, ArgumentsAppSpeedDownload);
-                    if (cancelTask == true)
-                    {
-                        httpClient.CancelPendingRequests();
-                        DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text = "Task пошёл нахуй x2");
-                        result.Close();
-                    }
                 }, token);
-                ahuet.Start(); */
+                ahuet.Start();
+
+                cancelTokenSource.CancelAfter(5000);
+
                /*ButtonReinstallApp.IsEnabled = false;
-                LaunchGame.IsEnabled = false;
-                clientDownloadApp.DownloadFileCompleted += CompleteDownloadChacheGame;
-                clientDownloadApp.DownloadFileAsync(new Uri("https://drive.google.com/uc?export=download&confirm=no_antivirus&id=10g0Vd_GWyt7VwF392q77NVBNibfGzQLi"), zipPath);
-                clientDownloadApp.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressDownloadServerGame);*/
-
-                using (HttpRequestMessage httpRequestMessage = new HttpRequestMessage() { Method = HttpMethod.Get, RequestUri = new Uri("https://drive.google.com/uc?export=download&confirm=no_antivirus&id=10g0Vd_GWyt7VwF392q77NVBNibfGzQLi") })
-                using (ProgressMessageHandler progressMessageHandler = new ProgressMessageHandler(new HttpClientHandler() { AllowAutoRedirect = true }))
-                using (httpClient = new HttpClient(progressMessageHandler) { Timeout = Timeout.InfiniteTimeSpan })
-                {
-                    stopWatch.Start();
-                    progressMessageHandler.HttpReceiveProgress += ProgressMessageHandler_HttpReceiveProgress;
-                    using (Stream result = httpClient.GetStreamAsync(httpRequestMessage.RequestUri).Result)
-                    using (Stream fileStream = new FileStream(zipPath, FileMode.OpenOrCreate, FileAccess.Write))
-                    {
-                        if (cancelTask == true)
-                        {
-                            DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text = "Task пошёл спать");
-                            result.Close();
-                            result.Dispose();
-                        }
-                        await result.CopyToAsync(fileStream, ArgumentsAppSpeedDownload);
-                    }
-                }
+                 LaunchGame.IsEnabled = false;
+                 clientDownloadApp.DownloadFileCompleted += CompleteDownloadChacheGame;
+                 clientDownloadApp.DownloadFileAsync(new Uri("https://drive.google.com/uc?export=download&confirm=no_antivirus&id=10g0Vd_GWyt7VwF392q77NVBNibfGzQLi"), zipPath);
+                 clientDownloadApp.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressDownloadServerGame);*/
 
 
+                /*using (HttpRequestMessage httpRequestMessage = new HttpRequestMessage() { Method = HttpMethod.Get, RequestUri = new Uri("https://drive.google.com/uc?export=download&confirm=no_antivirus&id=10g0Vd_GWyt7VwF392q77NVBNibfGzQLi") })
+                 using (ProgressMessageHandler progressMessageHandler = new ProgressMessageHandler(new HttpClientHandler() { AllowAutoRedirect = true }))
+                 using (httpClient = new HttpClient(progressMessageHandler) { Timeout = Timeout.InfiniteTimeSpan })
+                 {
+                     stopWatch.Start();
+                     progressMessageHandler.HttpReceiveProgress += ProgressMessageHandler_HttpReceiveProgress;
+                     using (Stream result = httpClient.GetStreamAsync(httpRequestMessage.RequestUri).Result)
+                     using (Stream fileStream = new FileStream(zipPath, FileMode.OpenOrCreate, FileAccess.Write))
+                     {
+                         if (cancelTask == true)
+                         {
+                             DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text = "Task пошёл спать");
+                             result.Close();
+                             result.Dispose();
+                         }
+                         await result.CopyToAsync(fileStream, ArgumentsAppSpeedDownload);
+                     }
+                 }*/
             }
             catch (Exception e)
             {
