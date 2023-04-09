@@ -139,7 +139,7 @@ namespace LaucnherYouTube
             ButtonReinstallApp.IsEnabled = true;
             clientDownloadApp.CancelAsync();
 
-            cancelTokenSource.Cancel();
+            // cancelTokenSource.Cancel();
         }
         private void ButtonLaunchGame(object sender, RoutedEventArgs rea)
         {
@@ -253,13 +253,13 @@ namespace LaucnherYouTube
         }
         #endregion
         #region UPDATEFUNC
-        static CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
-        CancellationToken token = cancelTokenSource.Token;
         public void ServerDownloadChacheGameAsync()
         {
+            CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
+            CancellationToken token = cancelTokenSource.Token;
             try
             {
-                Task ahuet = new Task(() =>
+                Task ahuet = new Task(async () =>
                 {
                     HttpRequestMessage httpRequestMessage = new HttpRequestMessage() { Method = HttpMethod.Get, RequestUri = new Uri("https://drive.google.com/uc?export=download&confirm=no_antivirus&id=10g0Vd_GWyt7VwF392q77NVBNibfGzQLi") };
                     ProgressMessageHandler progressMessageHandler = new ProgressMessageHandler(new HttpClientHandler() { AllowAutoRedirect = true });
@@ -270,17 +270,17 @@ namespace LaucnherYouTube
                     Stream result = httpClient.GetStreamAsync(httpRequestMessage.RequestUri).Result;
                     Stream fileStream = new FileStream(zipPath, FileMode.OpenOrCreate, FileAccess.Write);
 
-                    result.CopyTo(fileStream, ArgumentsAppSpeedDownload);
+                    await result.CopyToAsync(fileStream, ArgumentsAppSpeedDownload, token);
                 }, token);
                 ahuet.Start();
 
-                cancelTokenSource.CancelAfter(5000);
+                cancelTokenSource.CancelAfter(15000);
 
-               /*ButtonReinstallApp.IsEnabled = false;
-                 LaunchGame.IsEnabled = false;
-                 clientDownloadApp.DownloadFileCompleted += CompleteDownloadChacheGame;
-                 clientDownloadApp.DownloadFileAsync(new Uri("https://drive.google.com/uc?export=download&confirm=no_antivirus&id=10g0Vd_GWyt7VwF392q77NVBNibfGzQLi"), zipPath);
-                 clientDownloadApp.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressDownloadServerGame);*/
+                /*ButtonReinstallApp.IsEnabled = false;
+                  LaunchGame.IsEnabled = false;
+                  clientDownloadApp.DownloadFileCompleted += CompleteDownloadChacheGame;
+                  clientDownloadApp.DownloadFileAsync(new Uri("https://drive.google.com/uc?export=download&confirm=no_antivirus&id=10g0Vd_GWyt7VwF392q77NVBNibfGzQLi"), zipPath);
+                  clientDownloadApp.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressDownloadServerGame);*/
 
 
                 /*using (HttpRequestMessage httpRequestMessage = new HttpRequestMessage() { Method = HttpMethod.Get, RequestUri = new Uri("https://drive.google.com/uc?export=download&confirm=no_antivirus&id=10g0Vd_GWyt7VwF392q77NVBNibfGzQLi") })
