@@ -271,11 +271,9 @@ namespace LaucnherYouTube
                     Stream fileStream = new FileStream(zipPath, FileMode.OpenOrCreate, FileAccess.Write);
 
                     await result.CopyToAsync(fileStream, ArgumentsAppSpeedDownload, token);
-                }, token);
+                });
                 ahuet.Start();
-
-                cancelTokenSource.CancelAfter(15000);
-
+                cancelTokenSource.CancelAfter(5000);
                 /*ButtonReinstallApp.IsEnabled = false;
                   LaunchGame.IsEnabled = false;
                   clientDownloadApp.DownloadFileCompleted += CompleteDownloadChacheGame;
@@ -284,23 +282,23 @@ namespace LaucnherYouTube
 
 
                 /*using (HttpRequestMessage httpRequestMessage = new HttpRequestMessage() { Method = HttpMethod.Get, RequestUri = new Uri("https://drive.google.com/uc?export=download&confirm=no_antivirus&id=10g0Vd_GWyt7VwF392q77NVBNibfGzQLi") })
-                 using (ProgressMessageHandler progressMessageHandler = new ProgressMessageHandler(new HttpClientHandler() { AllowAutoRedirect = true }))
-                 using (httpClient = new HttpClient(progressMessageHandler) { Timeout = Timeout.InfiniteTimeSpan })
-                 {
-                     stopWatch.Start();
-                     progressMessageHandler.HttpReceiveProgress += ProgressMessageHandler_HttpReceiveProgress;
-                     using (Stream result = httpClient.GetStreamAsync(httpRequestMessage.RequestUri).Result)
-                     using (Stream fileStream = new FileStream(zipPath, FileMode.OpenOrCreate, FileAccess.Write))
-                     {
-                         if (cancelTask == true)
-                         {
-                             DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text = "Task пошёл спать");
-                             result.Close();
-                             result.Dispose();
-                         }
-                         await result.CopyToAsync(fileStream, ArgumentsAppSpeedDownload);
-                     }
-                 }*/
+                using (ProgressMessageHandler progressMessageHandler = new ProgressMessageHandler(new HttpClientHandler() { AllowAutoRedirect = true }))
+                using (httpClient = new HttpClient(progressMessageHandler) { Timeout = Timeout.InfiniteTimeSpan })
+                {
+                    stopWatch.Start();
+                    progressMessageHandler.HttpReceiveProgress += ProgressMessageHandler_HttpReceiveProgress;
+                    using (Stream result = await httpClient.GetStreamAsync(httpRequestMessage.RequestUri))
+                    using (Stream fileStream = new FileStream(zipPath, FileMode.OpenOrCreate, FileAccess.Write))
+                    {
+                        cancelTokenSource.CancelAfter(5000);
+                        if (token.IsCancellationRequested)
+                        {
+                            DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text = "Хуйня делов");
+                            return;
+                        }
+                        await result.CopyToAsync(fileStream, ArgumentsAppSpeedDownload, token);
+                    }
+                }*/
             }
             catch (Exception e)
             {
