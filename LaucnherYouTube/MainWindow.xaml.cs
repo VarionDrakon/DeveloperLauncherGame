@@ -253,12 +253,17 @@ namespace LaucnherYouTube
         }
         #endregion
         #region UPDATEFUNC
-        static CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
-        CancellationToken token = cancelTokenSource.Token;
+        static CancellationTokenSource cancelTokenSource;
+
         public void ServerDownloadChacheGameAsync()
         {
             try
             {
+                if (cancelTokenSource == null || cancelTokenSource.IsCancellationRequested)
+                {
+                    cancelTokenSource = new CancellationTokenSource();
+                }
+                CancellationToken token = cancelTokenSource.Token;
                 Task ahuet = new Task(async () =>
                 {
                     HttpRequestMessage httpRequestMessage = new HttpRequestMessage() { Method = HttpMethod.Get, RequestUri = new Uri("https://getfile.dokpub.com/yandex/get/https://disk.yandex.ru/d/ULuueEdGY9RIeA\r\n") };
@@ -278,17 +283,10 @@ namespace LaucnherYouTube
                         cancelTokenSource.Dispose();
                         result.Dispose();
                         fileStream.Dispose();
-                        cancelTokenSource = new CancellationTokenSource();
+  
                         return;
                     }
                 }, token);
-                if (ahuet.IsFaulted == true)
-                {
-                    DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text += "Da i zadacha hui soset");
-                    cancelTokenSource = new CancellationTokenSource();
-                    ahuet.Start();
-                }
-
                 ahuet.Start();
                 /*ButtonReinstallApp.IsEnabled = false;
                   LaunchGame.IsEnabled = false;
