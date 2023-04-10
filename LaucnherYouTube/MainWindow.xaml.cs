@@ -281,6 +281,10 @@ namespace LaucnherYouTube
                         DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text = "State: " + e.Message.ToString());
                     }
                 }, token);
+                if(ahuet.IsCanceled)
+                {
+                    
+                }
                 ahuet.Start();
                 /*ButtonReinstallApp.IsEnabled = false;
                   LaunchGame.IsEnabled = false;
