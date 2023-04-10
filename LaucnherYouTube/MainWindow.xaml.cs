@@ -138,8 +138,14 @@ namespace LaucnherYouTube
         {
             ButtonReinstallApp.IsEnabled = true;
             clientDownloadApp.CancelAsync();
-
+            try
+            {
             cancelTokenSource.Cancel();
+            }
+            catch (Exception ex)
+            {
+                DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text = "State: " + ex.Message.ToString());
+            }
         }
         private void ButtonLaunchGame(object sender, RoutedEventArgs rea)
         {
@@ -253,65 +259,43 @@ namespace LaucnherYouTube
         }
         #endregion
         #region UPDATEFUNC
-        static CancellationTokenSource cancelTokenSource;
-
+        CancellationTokenSource cancelTokenSource;
         public void ServerDownloadChacheGameAsync()
         {
             try
             {
+                ButtonReinstallApp.IsEnabled = false;
+                FoundNewVersion.IsEnabled = false;
                 if (cancelTokenSource == null || cancelTokenSource.IsCancellationRequested)
                 {
                     cancelTokenSource = new CancellationTokenSource();
                 }
                 CancellationToken token = cancelTokenSource.Token;
-                Task ahuet = new Task(async () =>
+                Task downloadFileHTTP = new Task(async () =>
                 {
                     HttpRequestMessage httpRequestMessage = new HttpRequestMessage() { Method = HttpMethod.Get, RequestUri = new Uri("https://getfile.dokpub.com/yandex/get/https://disk.yandex.ru/d/ULuueEdGY9RIeA") };
                     ProgressMessageHandler progressMessageHandler = new ProgressMessageHandler(new HttpClientHandler() { AllowAutoRedirect = true });
                     httpClient = new HttpClient(progressMessageHandler) { Timeout = Timeout.InfiniteTimeSpan };
                     stopWatch.Start();
                     progressMessageHandler.HttpReceiveProgress += ProgressMessageHandler_HttpReceiveProgress;
-                    Stream result = await httpClient.GetStreamAsync(httpRequestMessage.RequestUri);
+                    Stream streamFileServer = await httpClient.GetStreamAsync(httpRequestMessage.RequestUri);
                     Stream fileStream = new FileStream(zipPath, FileMode.OpenOrCreate, FileAccess.Write);
                     try
                     {
-                        await result.CopyToAsync(fileStream, ArgumentsAppSpeedDownload, token);
+                        await streamFileServer.CopyToAsync(fileStream, ArgumentsAppSpeedDownload, token);
                     }
                     catch (Exception e)
                     {
                         DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text = "State: " + e.Message.ToString());
+                        ButtonReinstallApp.Dispatcher.Invoke(() => ButtonReinstallApp.IsEnabled = true);
+                        FoundNewVersion.Dispatcher.Invoke(() => FoundNewVersion.IsEnabled = true);
                         cancelTokenSource.Dispose();
-                        result.Dispose();
+                        streamFileServer.Dispose();
                         fileStream.Dispose();
                         return;
                     }
                 }, token);
-                ahuet.Start();
-                /*ButtonReinstallApp.IsEnabled = false;
-                  LaunchGame.IsEnabled = false;
-                  clientDownloadApp.DownloadFileCompleted += CompleteDownloadChacheGame;
-                  clientDownloadApp.DownloadFileAsync(new Uri("https://drive.google.com/uc?export=download&confirm=no_antivirus&id=10g0Vd_GWyt7VwF392q77NVBNibfGzQLi"), zipPath);
-                  clientDownloadApp.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressDownloadServerGame);*/
-
-
-                /*using (HttpRequestMessage httpRequestMessage = new HttpRequestMessage() { Method = HttpMethod.Get, RequestUri = new Uri("https://drive.google.com/uc?export=download&confirm=no_antivirus&id=10g0Vd_GWyt7VwF392q77NVBNibfGzQLi") })
-                using (ProgressMessageHandler progressMessageHandler = new ProgressMessageHandler(new HttpClientHandler() { AllowAutoRedirect = true }))
-                using (httpClient = new HttpClient(progressMessageHandler) { Timeout = Timeout.InfiniteTimeSpan })
-                {
-                    stopWatch.Start();
-                    progressMessageHandler.HttpReceiveProgress += ProgressMessageHandler_HttpReceiveProgress;
-                    using (Stream result = await httpClient.GetStreamAsync(httpRequestMessage.RequestUri))
-                    using (Stream fileStream = new FileStream(zipPath, FileMode.OpenOrCreate, FileAccess.Write))
-                    {
-                        cancelTokenSource.CancelAfter(5000);
-                        if (token.IsCancellationRequested)
-                        {
-                            DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text = "Хуйня делов");
-                            return;
-                        }
-                        await result.CopyToAsync(fileStream, ArgumentsAppSpeedDownload, token);
-                    }
-                }*/
+                downloadFileHTTP.Start();
             }
             catch (Exception e)
             {
