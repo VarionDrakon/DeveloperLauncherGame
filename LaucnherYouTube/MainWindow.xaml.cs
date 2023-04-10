@@ -139,7 +139,7 @@ namespace LaucnherYouTube
             ButtonReinstallApp.IsEnabled = true;
             clientDownloadApp.CancelAsync();
 
-            // cancelTokenSource.Cancel();
+            cancelTokenSource.Cancel();
         }
         private void ButtonLaunchGame(object sender, RoutedEventArgs rea)
         {
@@ -253,27 +253,35 @@ namespace LaucnherYouTube
         }
         #endregion
         #region UPDATEFUNC
+        static CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
+        CancellationToken token = cancelTokenSource.Token;
         public void ServerDownloadChacheGameAsync()
         {
-            CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
-            CancellationToken token = cancelTokenSource.Token;
             try
             {
                 Task ahuet = new Task(async () =>
                 {
+                    if (token.IsCancellationRequested)
+                    {
+                        cancelTokenSource = new CancellationTokenSource();
+                    }
                     HttpRequestMessage httpRequestMessage = new HttpRequestMessage() { Method = HttpMethod.Get, RequestUri = new Uri("https://drive.google.com/uc?export=download&confirm=no_antivirus&id=10g0Vd_GWyt7VwF392q77NVBNibfGzQLi") };
                     ProgressMessageHandler progressMessageHandler = new ProgressMessageHandler(new HttpClientHandler() { AllowAutoRedirect = true });
                     httpClient = new HttpClient(progressMessageHandler) { Timeout = Timeout.InfiniteTimeSpan };
                     stopWatch.Start();
                     progressMessageHandler.HttpReceiveProgress += ProgressMessageHandler_HttpReceiveProgress;
-
-                    Stream result = httpClient.GetStreamAsync(httpRequestMessage.RequestUri).Result;
-                    Stream fileStream = new FileStream(zipPath, FileMode.OpenOrCreate, FileAccess.Write);
-
-                    await result.CopyToAsync(fileStream, ArgumentsAppSpeedDownload, token);
-                });
+                    try
+                    {
+                        Stream result = await httpClient.GetStreamAsync(httpRequestMessage.RequestUri);
+                        Stream fileStream = new FileStream(zipPath, FileMode.OpenOrCreate, FileAccess.Write);
+                        await result.CopyToAsync(fileStream, ArgumentsAppSpeedDownload, token);
+                    }
+                    catch (Exception e)
+                    {
+                        DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text = "State: " + e.Message.ToString());
+                    }
+                }, token);
                 ahuet.Start();
-                cancelTokenSource.CancelAfter(5000);
                 /*ButtonReinstallApp.IsEnabled = false;
                   LaunchGame.IsEnabled = false;
                   clientDownloadApp.DownloadFileCompleted += CompleteDownloadChacheGame;
@@ -303,6 +311,7 @@ namespace LaucnherYouTube
             catch (Exception e)
             {
                 LoggingProcessJobs("EXCEPTION E: " + e.Message.ToString());
+                DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text = "State: " + e.Message.ToString());
             }
         }
         private void CompleteDownloadChacheGame(object sender, AsyncCompletedEventArgs e)
