@@ -266,7 +266,7 @@ namespace LaucnherYouTube
                 CancellationToken token = cancelTokenSource.Token;
                 Task ahuet = new Task(async () =>
                 {
-                    HttpRequestMessage httpRequestMessage = new HttpRequestMessage() { Method = HttpMethod.Get, RequestUri = new Uri("https://getfile.dokpub.com/yandex/get/https://disk.yandex.ru/d/ULuueEdGY9RIeA\r\n") };
+                    HttpRequestMessage httpRequestMessage = new HttpRequestMessage() { Method = HttpMethod.Get, RequestUri = new Uri("https://getfile.dokpub.com/yandex/get/https://disk.yandex.ru/d/ULuueEdGY9RIeA") };
                     ProgressMessageHandler progressMessageHandler = new ProgressMessageHandler(new HttpClientHandler() { AllowAutoRedirect = true });
                     httpClient = new HttpClient(progressMessageHandler) { Timeout = Timeout.InfiniteTimeSpan };
                     stopWatch.Start();
@@ -283,7 +283,6 @@ namespace LaucnherYouTube
                         cancelTokenSource.Dispose();
                         result.Dispose();
                         fileStream.Dispose();
-  
                         return;
                     }
                 }, token);
