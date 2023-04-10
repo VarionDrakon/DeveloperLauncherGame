@@ -261,30 +261,34 @@ namespace LaucnherYouTube
             {
                 Task ahuet = new Task(async () =>
                 {
-                    if (token.IsCancellationRequested)
-                    {
-                        cancelTokenSource = new CancellationTokenSource();
-                    }
-                    HttpRequestMessage httpRequestMessage = new HttpRequestMessage() { Method = HttpMethod.Get, RequestUri = new Uri("https://drive.google.com/uc?export=download&confirm=no_antivirus&id=10g0Vd_GWyt7VwF392q77NVBNibfGzQLi") };
+                    HttpRequestMessage httpRequestMessage = new HttpRequestMessage() { Method = HttpMethod.Get, RequestUri = new Uri("https://getfile.dokpub.com/yandex/get/https://disk.yandex.ru/d/ULuueEdGY9RIeA\r\n") };
                     ProgressMessageHandler progressMessageHandler = new ProgressMessageHandler(new HttpClientHandler() { AllowAutoRedirect = true });
                     httpClient = new HttpClient(progressMessageHandler) { Timeout = Timeout.InfiniteTimeSpan };
                     stopWatch.Start();
                     progressMessageHandler.HttpReceiveProgress += ProgressMessageHandler_HttpReceiveProgress;
+                    Stream result = await httpClient.GetStreamAsync(httpRequestMessage.RequestUri);
+                    Stream fileStream = new FileStream(zipPath, FileMode.OpenOrCreate, FileAccess.Write);
                     try
                     {
-                        Stream result = await httpClient.GetStreamAsync(httpRequestMessage.RequestUri);
-                        Stream fileStream = new FileStream(zipPath, FileMode.OpenOrCreate, FileAccess.Write);
                         await result.CopyToAsync(fileStream, ArgumentsAppSpeedDownload, token);
                     }
                     catch (Exception e)
                     {
                         DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text = "State: " + e.Message.ToString());
+                        cancelTokenSource.Dispose();
+                        result.Dispose();
+                        fileStream.Dispose();
+                        cancelTokenSource = new CancellationTokenSource();
+                        return;
                     }
                 }, token);
-                if(ahuet.IsCanceled)
+                if (ahuet.IsFaulted == true)
                 {
-                    
+                    DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text += "Da i zadacha hui soset");
+                    cancelTokenSource = new CancellationTokenSource();
+                    ahuet.Start();
                 }
+
                 ahuet.Start();
                 /*ButtonReinstallApp.IsEnabled = false;
                   LaunchGame.IsEnabled = false;
@@ -315,7 +319,7 @@ namespace LaucnherYouTube
             catch (Exception e)
             {
                 LoggingProcessJobs("EXCEPTION E: " + e.Message.ToString());
-                DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text = "State: " + e.Message.ToString());
+                DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text = "State task: " + e.Message.ToString());
             }
         }
         private void CompleteDownloadChacheGame(object sender, AsyncCompletedEventArgs e)
