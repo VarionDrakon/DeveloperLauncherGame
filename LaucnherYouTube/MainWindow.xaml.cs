@@ -271,7 +271,7 @@ namespace LaucnherYouTube
                     cancelTokenSource = new CancellationTokenSource();
                 }
                 CancellationToken token = cancelTokenSource.Token;
-                Task downloadFileHTTP = new Task(async () =>
+                Task downloadFileHTTP =  Task.Run(async () =>
                 {
                     HttpRequestMessage httpRequestMessage = new HttpRequestMessage() { Method = HttpMethod.Get, RequestUri = new Uri("https://getfile.dokpub.com/yandex/get/https://disk.yandex.ru/d/ULuueEdGY9RIeA") };
                     ProgressMessageHandler progressMessageHandler = new ProgressMessageHandler(new HttpClientHandler() { AllowAutoRedirect = true });
@@ -295,11 +295,53 @@ namespace LaucnherYouTube
                         return;
                     }
                 }, token);
-                downloadFileHTTP.Start();
-                if (downloadFileHTTP.IsCompleted == true)
+
+                using (ZipArchive zipFileServer = ZipFile.OpenRead(zipPath))
                 {
-                    CompleteDownloadChacheGame();
+                    ProgressBarExtractFile.Value = 0;
+                    int zipFilesCount = zipFileServer.Entries.Count;
+                    ProgressBarExtractFile.Maximum = zipFilesCount;
+                    foreach (var zip in zipFileServer.Entries)
+                    {
+                        if (isStartUnzipUpdateFileApp == true)
+                        {
+                            zip.Archive.ExtractToDirectory(appTemlPath);
+                            isStartUnzipUpdateFileApp = false;
+                            break;
+                        }
+                    }
+                    ProgressBarExtractFile.Value = zipFilesCount;
                 }
+                File.Delete(zipPath);
+                foreach (string dgfse in Directory.GetFileSystemEntries(appTemlPath + "/Game"))
+                {
+                    FileAttributes attributes = File.GetAttributes(dgfse);
+                    DirectoryInfo dirInf = new DirectoryInfo(dgfse);
+                    FileInfo fileInf = new FileInfo(dgfse);
+                    if (Directory.Exists(@"Game/") == false)
+                    {
+                        Directory.CreateDirectory("Game");
+                    }
+                    if ((attributes & FileAttributes.Directory) == FileAttributes.Directory)
+                    {
+                        if (Directory.Exists(@"Game/" + dirInf.Name) == true)
+                        {
+                            Directory.Delete(@"Game/" + dirInf.Name, true);
+                        }
+                        dirInf.MoveTo(@"Game/" + dirInf.Name);
+                    }
+                    else if ((attributes & FileAttributes.Directory) != FileAttributes.Directory)
+                    {
+                        if (File.Exists(@"Game/" + fileInf.Name) == true)
+                        {
+                            File.Delete(@"Game/" + fileInf.Name);
+                        }
+                        fileInf.MoveTo(@"Game/" + fileInf.Name);
+                    }
+                }
+                DownloadAppState.Text = "Game installed!";
+                LaunchGame.IsEnabled = true;
+                ButtonReinstallApp.IsEnabled = true;
             }
             catch (Exception e)
             {
@@ -309,7 +351,6 @@ namespace LaucnherYouTube
         }
         private void CompleteDownloadChacheGame()
         {
-
             using (ZipArchive zipFileServer = ZipFile.OpenRead(zipPath))
             {
                 ProgressBarExtractFile.Value = 0;
