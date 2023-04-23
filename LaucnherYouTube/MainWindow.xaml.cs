@@ -29,7 +29,7 @@ namespace LaucnherYouTube
         private bool appIsStarting = false;
         private bool checkUpdate = true;
         private bool isStartUnzipUpdateFileApp = true;
-        private readonly Process processApp;
+        private Process processApp;
         public static bool UserAllowUpdateApp { get; set; } = false;
         private DispatcherTimer dispatcherTimer;
         private Point scrollPointMouse = new Point();
@@ -151,7 +151,7 @@ namespace LaucnherYouTube
         {
             try
             {
-                using (Process processApp = new Process())
+                using (processApp = new Process())
                 {
                     processApp.StartInfo.UseShellExecute = false;
                     processApp.StartInfo.FileName = @"Game\Steampunk Edge - IcePunk.exe";
@@ -165,18 +165,18 @@ namespace LaucnherYouTube
                 LoggingProcessJobs("EXCEPTION" + e.Message.ToString());
             }
         }
-        private void ProgressMessageHandler_HttpReceiveProgress(object sender, HttpProgressEventArgs e)
-        {
-            var calculateBytesSpeedWrite = e.BytesTransferred / 1024d / (stopWatch.ElapsedMilliseconds / 1000d);
-            DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text = "Progress download: " + e.ProgressPercentage + " Average speed download: " + (int)calculateBytesSpeedWrite + " kb/s");
-            ProgressBarExtractFile.Dispatcher.Invoke(() => ProgressBarExtractFile.Value = e.ProgressPercentage);
-        }
         private void ButtonKillProcessApp(object sender, RoutedEventArgs e)
         {
             if (appIsStarting == true)
             {
                 processApp.Kill();
             }
+        }
+        private void ProgressMessageHandler_HttpReceiveProgress(object sender, HttpProgressEventArgs e)
+        {
+            var calculateBytesSpeedWrite = e.BytesTransferred / 1024d / (stopWatch.ElapsedMilliseconds / 1000d);
+            DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text = "Progress download: " + e.ProgressPercentage + " Average speed download: " + (int)calculateBytesSpeedWrite + " kb/s");
+            ProgressBarExtractFile.Dispatcher.Invoke(() => ProgressBarExtractFile.Value = e.ProgressPercentage);
         }
         private void ScrollViewerContent_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
@@ -270,8 +270,8 @@ namespace LaucnherYouTube
                 {
                     cancelTokenSource = new CancellationTokenSource();
                 }
-                CancellationToken token = cancelTokenSource.Token;
-                Task downloadFileHTTP =  Task.Run(async () =>
+                CancellationToken cancellationToken = cancelTokenSource.Token;
+                Task downloadFileHTTP = Task.Run(async () =>
                 {
                     HttpRequestMessage httpRequestMessage = new HttpRequestMessage() { Method = HttpMethod.Get, RequestUri = new Uri("https://getfile.dokpub.com/yandex/get/https://disk.yandex.ru/d/ULuueEdGY9RIeA") };
                     ProgressMessageHandler progressMessageHandler = new ProgressMessageHandler(new HttpClientHandler() { AllowAutoRedirect = true });
@@ -279,10 +279,14 @@ namespace LaucnherYouTube
                     stopWatch.Start();
                     progressMessageHandler.HttpReceiveProgress += ProgressMessageHandler_HttpReceiveProgress;
                     Stream streamFileServer = await httpClient.GetStreamAsync(httpRequestMessage.RequestUri);
-                    Stream fileStream = new FileStream(zipPath, FileMode.OpenOrCreate, FileAccess.Write);
+                    Stream fileStreamServer = new FileStream(zipPath, FileMode.OpenOrCreate, FileAccess.Write);
                     try
                     {
-                        await streamFileServer.CopyToAsync(fileStream, ArgumentsAppSpeedDownload, token);
+                        await streamFileServer.CopyToAsync(fileStreamServer, ArgumentsAppSpeedDownload, cancellationToken);
+                        cancelTokenSource.Dispose();
+                        streamFileServer.Dispose();
+                        fileStreamServer.Dispose();
+                        return;
                     }
                     catch (Exception e)
                     {
@@ -291,112 +295,68 @@ namespace LaucnherYouTube
                         FoundNewVersion.Dispatcher.Invoke(() => FoundNewVersion.IsEnabled = true);
                         cancelTokenSource.Dispose();
                         streamFileServer.Dispose();
-                        fileStream.Dispose();
+                        fileStreamServer.Dispose();
                         return;
                     }
-                }, token);
-
-                using (ZipArchive zipFileServer = ZipFile.OpenRead(zipPath))
+                }, cancellationToken);
+                downloadFileHTTP.ContinueWith(obj =>
                 {
-                    ProgressBarExtractFile.Value = 0;
-                    int zipFilesCount = zipFileServer.Entries.Count;
-                    ProgressBarExtractFile.Maximum = zipFilesCount;
-                    foreach (var zip in zipFileServer.Entries)
+                    DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text = "Unzip...");
+                    using (ZipArchive zipFileServer = ZipFile.OpenRead(zipPath))
                     {
-                        if (isStartUnzipUpdateFileApp == true)
+                        ProgressBarExtractFile.Dispatcher.Invoke(() => ProgressBarExtractFile.Value = 0);
+                        int zipFilesCount = zipFileServer.Entries.Count;
+                        ProgressBarExtractFile.Dispatcher.Invoke(() => ProgressBarExtractFile.Maximum = zipFilesCount);
+                        foreach (var zip in zipFileServer.Entries)
                         {
-                            zip.Archive.ExtractToDirectory(appTemlPath);
-                            isStartUnzipUpdateFileApp = false;
-                            break;
+                            if (isStartUnzipUpdateFileApp == true)
+                            {
+                                zip.Archive.ExtractToDirectory(appTemlPath);
+                                isStartUnzipUpdateFileApp = false;
+                                break;
+                            }
+                        }
+                        ProgressBarExtractFile.Dispatcher.Invoke(() => ProgressBarExtractFile.Value = zipFilesCount);
+                    }
+                    File.Delete(zipPath);
+                    foreach (string dgfse in Directory.GetFileSystemEntries(appTemlPath + "/Game"))
+                    {
+                        FileAttributes attributes = File.GetAttributes(dgfse);
+                        DirectoryInfo dirInf = new DirectoryInfo(dgfse);
+                        FileInfo fileInf = new FileInfo(dgfse);
+                        if (Directory.Exists(@"Game/") == false)
+                        {
+                            Directory.CreateDirectory("Game");
+                        }
+                        if ((attributes & FileAttributes.Directory) == FileAttributes.Directory)
+                        {
+                            if (Directory.Exists(@"Game/" + dirInf.Name) == true)
+                            {
+                                Directory.Delete(@"Game/" + dirInf.Name, true);
+                            }
+                            dirInf.MoveTo(@"Game/" + dirInf.Name);
+                        }
+                        else if ((attributes & FileAttributes.Directory) != FileAttributes.Directory)
+                        {
+                            if (File.Exists(@"Game/" + fileInf.Name) == true)
+                            {
+                                File.Delete(@"Game/" + fileInf.Name);
+                            }
+                            fileInf.MoveTo(@"Game/" + fileInf.Name);
                         }
                     }
-                    ProgressBarExtractFile.Value = zipFilesCount;
-                }
-                File.Delete(zipPath);
-                foreach (string dgfse in Directory.GetFileSystemEntries(appTemlPath + "/Game"))
-                {
-                    FileAttributes attributes = File.GetAttributes(dgfse);
-                    DirectoryInfo dirInf = new DirectoryInfo(dgfse);
-                    FileInfo fileInf = new FileInfo(dgfse);
-                    if (Directory.Exists(@"Game/") == false)
-                    {
-                        Directory.CreateDirectory("Game");
-                    }
-                    if ((attributes & FileAttributes.Directory) == FileAttributes.Directory)
-                    {
-                        if (Directory.Exists(@"Game/" + dirInf.Name) == true)
-                        {
-                            Directory.Delete(@"Game/" + dirInf.Name, true);
-                        }
-                        dirInf.MoveTo(@"Game/" + dirInf.Name);
-                    }
-                    else if ((attributes & FileAttributes.Directory) != FileAttributes.Directory)
-                    {
-                        if (File.Exists(@"Game/" + fileInf.Name) == true)
-                        {
-                            File.Delete(@"Game/" + fileInf.Name);
-                        }
-                        fileInf.MoveTo(@"Game/" + fileInf.Name);
-                    }
-                }
-                DownloadAppState.Text = "Game installed!";
-                LaunchGame.IsEnabled = true;
-                ButtonReinstallApp.IsEnabled = true;
+                    DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text = "Game install!");
+                    ProgressBarExtractFile.Dispatcher.Invoke(() => ProgressBarExtractFile.Value = 0);
+                    ButtonReinstallApp.Dispatcher.Invoke(() => ButtonReinstallApp.IsEnabled = true);
+                    FoundNewVersion.Dispatcher.Invoke(() => FoundNewVersion.IsEnabled = true);
+                    return;
+                }, cancellationToken);
             }
             catch (Exception e)
             {
                 LoggingProcessJobs("EXCEPTION E: " + e.Message.ToString());
                 DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text = "State task: " + e.Message.ToString());
             }
-        }
-        private void CompleteDownloadChacheGame()
-        {
-            using (ZipArchive zipFileServer = ZipFile.OpenRead(zipPath))
-            {
-                ProgressBarExtractFile.Value = 0;
-                int zipFilesCount = zipFileServer.Entries.Count;
-                ProgressBarExtractFile.Maximum = zipFilesCount;
-                foreach (var zip in zipFileServer.Entries)
-                {
-                    if (isStartUnzipUpdateFileApp == true)
-                    {
-                        zip.Archive.ExtractToDirectory(appTemlPath);
-                        isStartUnzipUpdateFileApp = false;
-                        break;
-                    }
-                }
-                ProgressBarExtractFile.Value = zipFilesCount;
-            }
-            File.Delete(zipPath);
-            foreach (string dgfse in Directory.GetFileSystemEntries(appTemlPath + "/Game"))
-            {
-                FileAttributes attributes = File.GetAttributes(dgfse);
-                DirectoryInfo dirInf = new DirectoryInfo(dgfse);
-                FileInfo fileInf = new FileInfo(dgfse);
-                if (Directory.Exists(@"Game/") == false)
-                {
-                    Directory.CreateDirectory("Game");
-                }
-                if ((attributes & FileAttributes.Directory) == FileAttributes.Directory)
-                {
-                    if (Directory.Exists(@"Game/" + dirInf.Name) == true)
-                    {
-                        Directory.Delete(@"Game/" + dirInf.Name, true);
-                    }
-                    dirInf.MoveTo(@"Game/" + dirInf.Name);
-                }
-                else if ((attributes & FileAttributes.Directory) != FileAttributes.Directory)
-                {
-                    if (File.Exists(@"Game/" + fileInf.Name) == true)
-                    {
-                        File.Delete(@"Game/" + fileInf.Name);
-                    }
-                    fileInf.MoveTo(@"Game/" + fileInf.Name);
-                }
-            }
-            DownloadAppState.Text = "Game installed!";
-            LaunchGame.IsEnabled = true;
-            ButtonReinstallApp.IsEnabled = true;
         }
         #endregion
         #region WINDOWMANAGMENT 
