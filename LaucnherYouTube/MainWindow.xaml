@@ -234,7 +234,7 @@
             </Button.Background>
         </Button>
         <Button x:Name="ButtonKillProcess"
-                Click="ButtonKillProcessApp" Margin="0,28,44,0" Content="Kill Game" HorizontalAlignment="Right" Width="80" Height="25" VerticalAlignment="Top" Foreground="{DynamicResource ButtonForegroundTextCommon}" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" HorizontalContentAlignment="Right" FontWeight="Thin" FontSize="14" Style="{DynamicResource ButtonStyleCommon}">
+                Click="ButtonKillProcessApp" Margin="0,28,44,0" Content="Kill Game" HorizontalAlignment="Right" Width="80" Height="25" VerticalAlignment="Top" Foreground="{DynamicResource ButtonForegroundTextCommon}" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" HorizontalContentAlignment="Right" FontWeight="Thin" FontSize="14" Style="{DynamicResource ButtonStyleCommon}" IsEnabled="False">
             <Button.Background>
                 <ImageBrush ImageSource="/res/reinstall.png"/>
             </Button.Background>
@@ -257,7 +257,7 @@
             </ProgressBar.Foreground>
         </ProgressBar>
         <TextBlock x:Name="ServerConnecting" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Check server..." VerticalAlignment="Top" Width="80" Height="20" Margin="0,18,0,0"/>
-        <Button Content="Cancel" Margin="0,0,10,35" Click="ButtonCancelDownloadApp" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" Foreground="{DynamicResource ButtonForegroundTextCommon}" HorizontalContentAlignment="Right" FontWeight="Thin" FontSize="16" Style="{DynamicResource ButtonStyleCommon}" Width="80" Height="26" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+        <Button x:Name="ButtonCancelDownloadFile" Content="Cancel" Margin="0,0,10,35" Click="ButtonCancelDownloadApp" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" Foreground="{DynamicResource ButtonForegroundTextCommon}" HorizontalContentAlignment="Right" FontWeight="Thin" FontSize="16" Style="{DynamicResource ButtonStyleCommon}" Width="80" Height="26" VerticalAlignment="Bottom" HorizontalAlignment="Right" IsEnabled="False">
             <Button.Background>
                 <ImageBrush ImageSource="/res/cancel.png"/>
             </Button.Background>

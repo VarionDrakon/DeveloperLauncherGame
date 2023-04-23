@@ -136,7 +136,6 @@ namespace LaucnherYouTube
         }
         private void ButtonCancelDownloadApp(object sender, RoutedEventArgs e)
         {
-            ButtonReinstallApp.IsEnabled = true;
             clientDownloadApp.CancelAsync();
             try
             {
@@ -146,19 +145,20 @@ namespace LaucnherYouTube
             {
                 DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text = "State: " + ex.Message.ToString());
             }
+            ButtonReinstallApp.IsEnabled = true;
+            ButtonCancelDownloadFile.IsEnabled = false;
         }
         private void ButtonLaunchGame(object sender, RoutedEventArgs rea)
         {
             try
             {
-                using (processApp = new Process())
-                {
-                    processApp.StartInfo.UseShellExecute = false;
-                    processApp.StartInfo.FileName = @"Game\Steampunk Edge - IcePunk.exe";
-                    processApp.StartInfo.Arguments = ArgumentsAppString;
-                    processApp.Start();
-                    idProcessApp = processApp.Id;
-                }
+                processApp = new Process();
+                processApp.StartInfo.UseShellExecute = false;
+                processApp.StartInfo.FileName = @"Game\Steampunk Edge - IcePunk.exe";
+                processApp.StartInfo.Arguments = ArgumentsAppString;
+                processApp.Start();
+                idProcessApp = processApp.Id;
+                ButtonKillProcess.IsEnabled = true;
             }
             catch (Exception e)
             {
@@ -170,6 +170,8 @@ namespace LaucnherYouTube
             if (appIsStarting == true)
             {
                 processApp.Kill();
+                processApp.Dispose();
+                ButtonKillProcess.IsEnabled = false;
             }
         }
         private void ProgressMessageHandler_HttpReceiveProgress(object sender, HttpProgressEventArgs e)
@@ -262,6 +264,7 @@ namespace LaucnherYouTube
         CancellationTokenSource cancelTokenSource;
         public void ServerDownloadChacheGameAsync()
         {
+            ButtonCancelDownloadFile.IsEnabled = true;
             try
             {
                 ButtonReinstallApp.IsEnabled = false;
