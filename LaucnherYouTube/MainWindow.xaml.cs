@@ -81,13 +81,13 @@ namespace LaucnherYouTube
                     WebClient client = new WebClient();
                     client.DownloadFileCompleted += CompleteDownloadVersionXMLServer;
                     client.DownloadFileAsync(new Uri("https://raw.githubusercontent.com/VarionDrakon/LauncherGame/main/versionServer.xml"), "Assets/versionServer.xml");
-                    ServerConnecting.Text = "Server online!";
+                    ServerConnecting.Text = "SERVER ONLINE!";
                 }
             }
             catch
             {
-                ServerConnecting.Text = "Server offline!";
-                FoundNewVersion.IsEnabled = false;
+                ServerConnecting.Text = "SERVER OFFLINE!";
+                ButtonInLauncher_CheckUpdate.IsEnabled = false;
             }
         }
         private void CompleteDownloadVersionXMLServer(object sender, AsyncCompletedEventArgs e)
@@ -145,8 +145,8 @@ namespace LaucnherYouTube
             {
                 DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text = "State: " + ex.Message.ToString());
             }
-            ButtonReinstallApp.IsEnabled = true;
-            ButtonCancelDownloadFile.IsEnabled = false;
+            ButtonInLauncher_ReinstallApp.IsEnabled = true;
+            ButtonInLauncher_StopDownloadGame.IsEnabled = false;
         }
         private void ButtonLaunchGame(object sender, RoutedEventArgs rea)
         {
@@ -158,7 +158,7 @@ namespace LaucnherYouTube
                 processApp.StartInfo.Arguments = ArgumentsAppString;
                 processApp.Start();
                 idProcessApp = processApp.Id;
-                ButtonKillProcess.IsEnabled = true;
+                ButtonInLauncher_KillStartedGame.IsEnabled = true;
             }
             catch (Exception e)
             {
@@ -171,7 +171,7 @@ namespace LaucnherYouTube
             {
                 processApp.Kill();
                 processApp.Dispose();
-                ButtonKillProcess.IsEnabled = false;
+                ButtonInLauncher_KillStartedGame.IsEnabled = false;
             }
         }
         private void ProgressMessageHandler_HttpReceiveProgress(object sender, HttpProgressEventArgs e)
@@ -208,12 +208,12 @@ namespace LaucnherYouTube
         {
             if (_stateLocateVersionXML != _stateServerVersionXML & checkUpdate == true)
             {
-                FoundNewVersion.IsEnabled = true;
+                ButtonInLauncher_CheckUpdate.IsEnabled = true;
                 checkUpdate = false;
             }
             if (UserAllowUpdateApp == true)
             {
-                FoundNewVersion.IsEnabled = false;
+                ButtonInLauncher_CheckUpdate.IsEnabled = false;
                 ServerDownloadChacheGameAsync();
                 UserAllowUpdateApp = false;
             }
@@ -264,11 +264,11 @@ namespace LaucnherYouTube
         CancellationTokenSource cancelTokenSource;
         public void ServerDownloadChacheGameAsync()
         {
-            ButtonCancelDownloadFile.IsEnabled = true;
+            ButtonInLauncher_StopDownloadGame.IsEnabled = true;
             try
             {
-                ButtonReinstallApp.IsEnabled = false;
-                FoundNewVersion.IsEnabled = false;
+                ButtonInLauncher_ReinstallApp.IsEnabled = false;
+                ButtonInLauncher_CheckUpdate.IsEnabled = false;
                 if (cancelTokenSource == null || cancelTokenSource.IsCancellationRequested)
                 {
                     cancelTokenSource = new CancellationTokenSource();
@@ -294,8 +294,8 @@ namespace LaucnherYouTube
                     catch (Exception e)
                     {
                         DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text = "State: " + e.Message.ToString());
-                        ButtonReinstallApp.Dispatcher.Invoke(() => ButtonReinstallApp.IsEnabled = true);
-                        FoundNewVersion.Dispatcher.Invoke(() => FoundNewVersion.IsEnabled = true);
+                        ButtonInLauncher_ReinstallApp.Dispatcher.Invoke(() => ButtonInLauncher_ReinstallApp.IsEnabled = true);
+                        ButtonInLauncher_CheckUpdate.Dispatcher.Invoke(() => ButtonInLauncher_CheckUpdate.IsEnabled = true);
                         cancelTokenSource.Dispose();
                         streamFileServer.Dispose();
                         fileStreamServer.Dispose();
@@ -350,8 +350,8 @@ namespace LaucnherYouTube
                     }
                     DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text = "Game install!");
                     ProgressBarExtractFile.Dispatcher.Invoke(() => ProgressBarExtractFile.Value = 0);
-                    ButtonReinstallApp.Dispatcher.Invoke(() => ButtonReinstallApp.IsEnabled = true);
-                    FoundNewVersion.Dispatcher.Invoke(() => FoundNewVersion.IsEnabled = true);
+                    ButtonInLauncher_ReinstallApp.Dispatcher.Invoke(() => ButtonInLauncher_ReinstallApp.IsEnabled = true);
+                    ButtonInLauncher_CheckUpdate.Dispatcher.Invoke(() => ButtonInLauncher_CheckUpdate.IsEnabled = true);
                     return;
                 }, cancellationToken);
             }

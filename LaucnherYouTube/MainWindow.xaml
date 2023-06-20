@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:LaucnherYouTube"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="900" Foreground="#FFFFFBFB" WindowStartupLocation="CenterScreen"
-    xmlns:System="clr-namespace:System;assembly=mscorlib" WindowStyle="None" ResizeMode="NoResize">
+    xmlns:System="clr-namespace:System;assembly=mscorlib" WindowStyle="None" ResizeMode="NoResize"
+    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
     <Window.Resources>
-        <ImageBrush x:Key="ButtonBackgroundUpdate" ImageSource="/res/UPDATE.png"/>
         <SolidColorBrush x:Key="ButtonBorderBrushCommon" Color="#00000000"/>
         <SolidColorBrush x:Key="ButtonForegroundTextCommon" Color="White"/>
         <Style x:Key="FocusVisual">
@@ -29,53 +29,7 @@
         <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
         <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
         <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
-        <Style x:Key="ButtonStyleCommon" TargetType="{x:Type Button}">
-            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
-            <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
-            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
-            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Padding" Value="1"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true" CornerRadius="3">
-                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsDefaulted" Value="true">
-                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Background" TargetName="border" Value="#FF4CA7FC"/>
-                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource ButtonBorderBrushCommon}"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="true">
-                                <Setter Property="Background" TargetName="border" Value="#FF4CA7FC"/>
-                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource ButtonBorderBrushCommon}"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource ButtonBorderBrushCommon}"/>
-                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{DynamicResource ButtonForegroundTextCommon}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
         <System:Double x:Key="BackgroundImageApp">0.15</System:Double>
-        <ImageBrush x:Key="ImageBackgroundApp" ImageSource="/res/BackgroundApp.png" Opacity="0.15"/>
-        <Style x:Key="FocusVisual1">
-            <Setter Property="Control.Template">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <Rectangle Margin="2" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
         <SolidColorBrush x:Key="Button.Static.Background1" Color="#FFDDDDDD"/>
         <SolidColorBrush x:Key="Button.Static.Border1" Color="#FF707070"/>
         <SolidColorBrush x:Key="Button.MouseOver.Background1" Color="#FFBEE6FD"/>
@@ -85,36 +39,6 @@
         <SolidColorBrush x:Key="Button.Disabled.Background1" Color="#FFF4F4F4"/>
         <SolidColorBrush x:Key="Button.Disabled.Border1" Color="#FFADB2B5"/>
         <SolidColorBrush x:Key="Button.Disabled.Foreground1" Color="#FF838383"/>
-        <Style x:Key="ButtonStyleUIBorderApp" TargetType="{x:Type Button}">
-            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual1}"/>
-            <Setter Property="Background" Value="{StaticResource Button.Static.Background1}"/>
-            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border1}"/>
-            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Padding" Value="1"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
-                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsDefaulted" Value="true">
-                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Background" TargetName="border" Value="#FF1A3B8C"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="true">
-                                <Setter Property="Background" TargetName="border" Value="#FF1A3B8C"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
         <Style x:Key="FocusVisual2">
             <Setter Property="Control.Template">
                 <Setter.Value>
@@ -225,30 +149,226 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="FocusVisual6">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.Static.Background6" Color="#FFDDDDDD"/>
+        <SolidColorBrush x:Key="Button.Static.Border6" Color="#FF707070"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background6" Color="#FFBEE6FD"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border6" Color="#FF3C7FB1"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background6" Color="#FFC4E5F6"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border6" Color="#FF2C628B"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background6" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border6" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground6" Color="#FF838383"/>
+        <Style x:Key="ButtonMainStyle" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual6}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background6}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border6}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true" CornerRadius="3">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Cursor" Value="Hand"/>
+                                <Setter Property="Margin" Value="10, 5, 0, 0"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Margin" Value="10, 5, 0, 0"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background6}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border6}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground6}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="FocusVisual1">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="TextBox.Static.Background" Color="#FFFFFFFF"/>
+        <Style x:Key="FocusVisual7">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="TextBox.Static.Background1" Color="#FFFFFFFF"/>
+        <Style x:Key="ComboBoxEditableTextBox" TargetType="{x:Type TextBox}">
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="AllowDrop" Value="true"/>
+            <Setter Property="MinWidth" Value="0"/>
+            <Setter Property="MinHeight" Value="0"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <ScrollViewer x:Name="PART_ContentHost" Background="Transparent" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!--Style for ComboBox near button start game-->
+        <SolidColorBrush x:Key="ComboBox.Static.Background" Color="#FF009CFF"/>
+        <SolidColorBrush x:Key="ComboBox.Static.Border"/>
+        <SolidColorBrush x:Key="ComboBox.Static.Glyph"/>
+        <SolidColorBrush x:Key="ComboBox.MouseOver.Background" Color="#FF0085DA"/>
+        <SolidColorBrush x:Key="ComboBox.MouseOver.Border"/>
+        <SolidColorBrush x:Key="ComboBox.MouseOver.Glyph"/>
+        <SolidColorBrush x:Key="ComboBox.Pressed.Background" Color="#FF0069AB"/>
+        <SolidColorBrush x:Key="ComboBox.Pressed.Border"/>
+        <SolidColorBrush x:Key="ComboBox.Pressed.Glyph"/>
+        <SolidColorBrush x:Key="ComboBox.Disabled.Background"/>
+        <SolidColorBrush x:Key="ComboBox.Disabled.Border"/>
+        <SolidColorBrush x:Key="ComboBox.Disabled.Glyph"/>
+        <Style x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="IsTabStop" Value="false"/>
+            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="ClickMode" Value="Press"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border x:Name="templateRoot" Background="{StaticResource ComboBox.Static.Background}" BorderBrush="{StaticResource ComboBox.Static.Border}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                    <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="false"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource ComboBox.MouseOver.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource ComboBox.MouseOver.Border}"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                    <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="false"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource ComboBox.Pressed.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource ComboBox.Pressed.Border}"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                    <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="false"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource ComboBox.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource ComboBox.Disabled.Border}"/>
+                            </MultiDataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <ControlTemplate x:Key="ComboBoxTemplate" TargetType="{x:Type ComboBox}">
+            <Grid x:Name="templateRoot" SnapsToDevicePixels="true">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" Width="0"/>
+                </Grid.ColumnDefinitions>
+                <Popup x:Name="PART_Popup" AllowsTransparency="true" Grid.ColumnSpan="20" IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Margin="10" Placement="Bottom" PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
+                    <theme:SystemDropShadowChrome x:Name="shadow" Color="Transparent" MinWidth="{Binding ActualWidth, ElementName=templateRoot}" MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                        <Border x:Name="dropDownBorder" Background="#FF0A0B17" BorderThickness="1">
+                            <ScrollViewer x:Name="DropDownScrollViewer">
+                                <Grid x:Name="grid" RenderOptions.ClearTypeHint="Enabled">
+                                    <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="10" VerticalAlignment="Top" Width="10">
+                                        <Rectangle x:Name="opaqueRect" Fill="{Binding Background, ElementName=dropDownBorder}" Height="{Binding ActualHeight, ElementName=dropDownBorder}" Width="{Binding ActualWidth, ElementName=dropDownBorder}"/>
+                                    </Canvas>
+                                    <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                </Grid>
+                            </ScrollViewer>
+                        </Border>
+                    </theme:SystemDropShadowChrome>
+                </Popup>
+                <ToggleButton x:Name="toggleButton" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Grid.ColumnSpan="2" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Style="{StaticResource ComboBoxToggleButton}"/>
+                <ContentPresenter x:Name="contentPresenter" ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" Content="{TemplateBinding SelectionBoxItem}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsHitTestVisible="false" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="HasDropShadow" SourceName="PART_Popup" Value="true">
+                    <Setter Property="Margin" TargetName="shadow" Value="0,0,5,5"/>
+                    <Setter Property="Color" TargetName="shadow" Value="#71000000"/>
+                </Trigger>
+                <Trigger Property="HasItems" Value="false">
+                    <Setter Property="Height" TargetName="dropDownBorder" Value="95"/>
+                </Trigger>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsGrouping" Value="true"/>
+                        <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                    </MultiTrigger.Conditions>
+                    <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                </MultiTrigger>
+                <Trigger Property="ScrollViewer.CanContentScroll" SourceName="DropDownScrollViewer" Value="false">
+                    <Setter Property="Canvas.Top" TargetName="opaqueRect" Value="{Binding VerticalOffset, ElementName=DropDownScrollViewer}"/>
+                    <Setter Property="Canvas.Left" TargetName="opaqueRect" Value="{Binding HorizontalOffset, ElementName=DropDownScrollViewer}"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <Style x:Key="StyleComboBoxChooseGameInLauncher_CurrentGame" TargetType="{x:Type ComboBox}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual7}"/>
+            <Setter Property="Background" Value="{StaticResource ComboBox.Static.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ComboBox.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="Padding" Value="6,3,5,3"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="Template" Value="{StaticResource ComboBoxTemplate}"/>
+            <Style.Triggers>
+                <Trigger Property="IsEditable" Value="true">
+                    <Setter Property="IsTabStop" Value="false"/>
+                    <Setter Property="Padding" Value="2"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
-    <Grid Background="{DynamicResource ImageBackgroundApp}" Margin="0,0,0,-6">
-        <Button x:Name="ButtonReinstallApp"
-                Click="ButtonUpdateDialogWindow" Margin="10,134,0,0" Content="Reinstall" Foreground="{DynamicResource ButtonForegroundTextCommon}" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" HorizontalContentAlignment="Right" FontWeight="Thin" FontSize="16" Style="{DynamicResource ButtonStyleCommon}" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="80">
-            <Button.Background>
-                <ImageBrush ImageSource="/res/reinstall.png"/>
-            </Button.Background>
-        </Button>
-        <Button x:Name="ButtonKillProcess"
-                Click="ButtonKillProcessApp" Margin="0,28,44,0" Content="Kill Game" HorizontalAlignment="Right" Width="80" Height="25" VerticalAlignment="Top" Foreground="{DynamicResource ButtonForegroundTextCommon}" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" HorizontalContentAlignment="Right" FontWeight="Thin" FontSize="14" Style="{DynamicResource ButtonStyleCommon}" IsEnabled="False">
-            <Button.Background>
-                <ImageBrush ImageSource="/res/reinstall.png"/>
-            </Button.Background>
-        </Button>
-        <TextBlock x:Name="_textCurrentVersion" HorizontalAlignment="Left" Margin="10,52,0,0" TextWrapping="NoWrap" Text="Current Version: " VerticalAlignment="Top" Height="16" Width="137"/>
-        <TextBlock x:Name="_textServerVersion" HorizontalAlignment="Left" Margin="10,88,0,0" TextWrapping="Wrap" Text="Server version: " VerticalAlignment="Top" Height="16" Width="137"/>
-        <Button x:Name="LaunchGame" Content="Launch"   Click="ButtonLaunchGame" Margin="0,0,10,10" RenderTransformOrigin="0.589,0.526" HorizontalAlignment="Right" Width="80" Foreground="{DynamicResource ButtonForegroundTextCommon}" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" FontWeight="Thin" HorizontalContentAlignment="Right" FontSize="16" Style="{DynamicResource ButtonStyleCommon}" Height="25" VerticalAlignment="Bottom">
-            <Button.Background>
-                <ImageBrush ImageSource="/res/download.png"/>
-            </Button.Background>
-        </Button>
-        <TextBlock  x:Name="AppState" Margin="0,0,80,13" TextWrapping="Wrap" Text="Initializing game..." FontSize="11" Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="116"/>
-        <TextBlock x:Name="DownloadAppState" Margin="10,0,138,39" TextWrapping="Wrap" Text="Initialize update..." Panel.ZIndex="1" Foreground="{DynamicResource ButtonForegroundTextCommon}" Height="20" VerticalAlignment="Bottom"/>
-        <ProgressBar Name="ProgressBarExtractFile" Margin="10,0,92,39" Height="20" VerticalAlignment="Bottom" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" Background="Black" Grid.ColumnSpan="2">
+    <!--Next comes the markup-->
+    <Grid Margin="0,0,0,-6" Background="#FF0A0B17">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Rectangle Margin="0,0,0,561" Fill="#FF0A0B17" MouseDown="Image_MouseDown"/>
+        <TextBlock x:Name="_textCurrentVersion" HorizontalAlignment="Left" Margin="10,335,0,0" TextWrapping="NoWrap" Text="Current Version: " VerticalAlignment="Top" Height="16" Width="138"/>
+        <TextBlock x:Name="_textServerVersion" HorizontalAlignment="Left" Margin="10,314,0,0" TextWrapping="Wrap" Text="Server version: " VerticalAlignment="Top" Height="16" Width="138"/>
+        <Button x:Name="LaunchGame" Content="Launch"   Click="ButtonLaunchGame" Margin="10,0,0,69" RenderTransformOrigin="0.589,0.526" Foreground="{DynamicResource ButtonForegroundTextCommon}" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" HorizontalContentAlignment="Center" FontSize="16" Height="62" VerticalAlignment="Bottom" Background="#FF009CFF" HorizontalAlignment="Left" Width="236"/>
+        <TextBlock  x:Name="AppState" Margin="10,0,0,230" TextWrapping="Wrap" Text="Initializing game..." FontSize="11" Height="14" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="116"/>
+        <TextBlock x:Name="DownloadAppState" Margin="10,0,0,0" TextWrapping="Wrap" Text="Initialize update..." Panel.ZIndex="1" Foreground="{DynamicResource ButtonForegroundTextCommon}" Height="39" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="236"/>
+        <ProgressBar Name="ProgressBarExtractFile" Margin="10,0,0,39" Height="25" VerticalAlignment="Bottom" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" Background="Black" HorizontalAlignment="Left" Width="206">
             <ProgressBar.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFFF5D00"/>
@@ -256,26 +376,12 @@
                 </LinearGradientBrush>
             </ProgressBar.Foreground>
         </ProgressBar>
-        <TextBlock x:Name="ServerConnecting" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Check server..." VerticalAlignment="Top" Width="80" Height="20" Margin="0,18,0,0"/>
-        <Button x:Name="ButtonCancelDownloadFile" Content="Cancel" Margin="0,0,10,35" Click="ButtonCancelDownloadApp" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" Foreground="{DynamicResource ButtonForegroundTextCommon}" HorizontalContentAlignment="Right" FontWeight="Thin" FontSize="16" Style="{DynamicResource ButtonStyleCommon}" Width="80" Height="26" VerticalAlignment="Bottom" HorizontalAlignment="Right" IsEnabled="False">
-            <Button.Background>
-                <ImageBrush ImageSource="/res/cancel.png"/>
-            </Button.Background>
-        </Button>
-        <Button Style="{DynamicResource ButtonStyleCommon}" x:Name="FoundNewVersion" Content="Update!" HorizontalAlignment="Left" Margin="10,110,0,0" Height="24" VerticalAlignment="Top" Click="ButtonFoundNewVersion" Width="80" HorizontalContentAlignment="Right" FontWeight="Thin" FontSize="16" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" Foreground="{DynamicResource ButtonForegroundTextCommon}" IsEnabled="False">
-            <Button.Background>
-                <ImageBrush ImageSource="/res/update.png" Opacity="1"/>
-            </Button.Background>
-        </Button>
-        <Image Height="18" VerticalAlignment="Top" Source="/res/Border.png" Stretch="Fill" Opacity="0.3" MouseDown="Image_MouseDown"/>
-        <Button x:Name="CloseApp" Content="X" Background="#00DDDDDD" Foreground="#FF4092A2" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" HorizontalAlignment="Right" Width="18" Height="18" VerticalAlignment="Top" Click="CloseApp_Click" Margin="0,0,16,0" Style="{DynamicResource ButtonStyleUIBorderApp}"/>
-        <Button Style="{DynamicResource ButtonStyleUIBorderApp}" x:Name="RollUpApp" Content="_" Margin="0,0,56,0" VerticalAlignment="Top" Background="#00DDDDDD" Height="18" Foreground="#FF4092A2" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" HorizontalAlignment="Right" Width="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" FontSize="11" Click="RollUpApp_Click" Focusable="False"/>
-        <Button x:Name="UnwrapApp" Content="=" Margin="0,0,36,0" VerticalAlignment="Top" Background="#00DDDDDD" Height="18" Foreground="#FF4092A2" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" HorizontalAlignment="Right" Width="18" Click="UnwrapApp_Click" Style="{DynamicResource ButtonStyleUIBorderApp}"/>
+        <TextBlock x:Name="ServerConnecting" HorizontalAlignment="Left" TextWrapping="Wrap" Text="CHECK SERVER..." VerticalAlignment="Top" Width="140" Height="20" Margin="208,26,0,0" Foreground="#FF949494" FontFamily="Arial" FontSize="16"/>
+        <Button x:Name="CloseApp" Content="X" Background="#00DDDDDD" Foreground="#FF4092A2" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" HorizontalAlignment="Right" Width="18" Height="18" VerticalAlignment="Top" Click="CloseApp_Click"/>
+        <Button x:Name="RollUpApp" Content="_" Margin="0,0,32,0" VerticalAlignment="Top" Background="#00DDDDDD" Height="18" Foreground="#FF4092A2" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" HorizontalAlignment="Right" Width="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" FontSize="11" Click="RollUpApp_Click" Focusable="False"/>
+        <Button x:Name="UnwrapApp" Content="=" Margin="0,0,18,0" VerticalAlignment="Top"   Background="#00DDDDDD" Height="18" Foreground="#FF4092A2" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" HorizontalAlignment="Right" Width="18" Click="UnwrapApp_Click"/>
 
-        <ScrollViewer x:Name="ScrollViewerContent" Margin="360,58,0,68" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" PreviewMouseLeftButtonUp="ScrollViewerContent_PreviewMouseLeftButtonUp" PreviewMouseWheel="ScrollViewerContent_PreviewMouseWheel" PreviewMouseMove="ScrollViewerContent_PreviewMouseMove" PreviewMouseLeftButtonDown="ScrollViewerContent_PreviewMouseLeftButtonDown" Height="480">
-            <ScrollViewer.Background>
-                <ImageBrush ImageSource="/backgroundContent.png" Opacity="0.7"/>
-            </ScrollViewer.Background>
+        <ScrollViewer x:Name="ScrollViewerContent" Margin="10,155,138,0" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" PreviewMouseLeftButtonUp="ScrollViewerContent_PreviewMouseLeftButtonUp" PreviewMouseWheel="ScrollViewerContent_PreviewMouseWheel" PreviewMouseMove="ScrollViewerContent_PreviewMouseMove" PreviewMouseLeftButtonDown="ScrollViewerContent_PreviewMouseLeftButtonDown" Foreground="{x:Null}" Height="379" VerticalAlignment="Top" Visibility="Hidden">
             <StackPanel x:Name="StackPanelScrollViewerContentServer" Orientation="Horizontal" Height="360" Width="2000">
                 <Button Style="{DynamicResource broochButtonContent}" x:Name="broochButtonContentServer_Content1" Cursor="Hand" BorderBrush="{x:Null}" Foreground="{x:Null}">
                 </Button>
@@ -291,7 +397,47 @@
                 </Button>
             </StackPanel>
         </ScrollViewer>
-        <Button x:Name="OpenSettingsWindiowButton" Margin="0,28,10,0" VerticalAlignment="Top" Height="25" Content="S" Background="#FF2CADFF" BorderBrush="#FF0082E5" Click="OpenSettingsWindiowButton_Click" HorizontalAlignment="Right" Width="29"/>
-        <TextBlock x:Name="SendersArgumentsTextBlock" HorizontalAlignment="Left" Margin="10,0,0,64" TextWrapping="Wrap" Text="Arguments for app:" Width="293" Height="16" VerticalAlignment="Bottom"/>
+        <Button x:Name="OpenSettingsWindiowButton" VerticalAlignment="Top" Height="50" Content="" Click="OpenSettingsWindiowButton_Click" HorizontalAlignment="Left" Width="50" BorderBrush="{x:Null}" Margin="10,10,0,0" Focusable="False" Style="{DynamicResource ButtonMainStyle}" Foreground="{x:Null}">
+            <Button.Background>
+                <ImageBrush ImageSource="/res/GameCenterLogotype.png"/>
+            </Button.Background>
+        </Button>
+
+        <Rectangle x:Name="BackgroundBorderListingApps" Margin="10,73,10,0" Fill="#FF18182B" Height="49" VerticalAlignment="Top" RadiusX="3" RadiusY="3"/>
+        <Image x:Name="IconGameCoal" HorizontalAlignment="Left" Height="40" Margin="123,77,0,0" VerticalAlignment="Top" Width="40" Source="/res/GameCoal.png"/>
+        <TextBlock x:Name="TextListenApp" HorizontalAlignment="Left" Margin="20,89,0,0" TextWrapping="Wrap" Text="LISTEN GAMES" VerticalAlignment="Top" Foreground="#FF949494"/>
+        <Image x:Name="IconGameDeatch" HorizontalAlignment="Left" Height="40" Margin="176,77,0,0" VerticalAlignment="Top" Width="40" Source="/res/GameDeatch.png"/>
+        <Image x:Name="IconGameFigure" HorizontalAlignment="Left" Height="40" Margin="228,77,0,0" VerticalAlignment="Top" Width="40" Source="/res/GameFigure.png"/>
+        <TextBlock x:Name="TextInWindow_recomendation" HorizontalAlignment="Left" Margin="10,137,0,0" Text="RECOMENDATION" VerticalAlignment="Top" FontFamily="Arial" FontSize="16" Foreground="#FFE8E8E8" Cursor="Arrow" Visibility="Hidden" />
+        <Button x:Name="ButtonInLauncher_InShop" Content="IN SHOP" Margin="0,135,138,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="16" Foreground="#FFE8E8E8" BorderBrush="{x:Null}" Background="#FF18182B" Style="{DynamicResource ButtonMainStyle}" HorizontalAlignment="Right" Width="70" Visibility="Hidden" />
+        <Button x:Name="ButtonInLauncher_CheckUpdate" Content="CHECK UPDATE" HorizontalAlignment="Left" Margin="66,24,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="#FF949494" FontFamily="Arial" FontSize="16" MouseDown="ButtonFoundNewVersion"/>
+        <Button x:Name="ButtonInLauncher_ReinstallApp" Content="REINSTALL APP" HorizontalAlignment="Left" Margin="10,257,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="#FF949494" FontFamily="Arial" FontSize="16" MouseDown="ButtonUpdateDialogWindow"/>
+        <Button x:Name="ButtonInLauncher_KillStartedGame" Content="KILL GAME" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="#FF949494" FontFamily="Arial" FontSize="16" MouseDown="ButtonKillProcessApp" Width="85"/>
+        <Button x:Name="ButtonInLauncher_StopDownloadGame" Content="X" HorizontalAlignment="Left" Margin="221,542,0,0" VerticalAlignment="Top" Background="{x:Null}" Click="ButtonCancelDownloadApp" FontFamily="Arial" FontSize="16" BorderBrush="{x:Null}" Foreground="#FFE8E8E8" Width="25" Height="25"/>
+        <Image x:Name="BannerInLauncher_GameFigure" HorizontalAlignment="Left" Height="125" Margin="-2,127,0,0" VerticalAlignment="Top" Width="250" Source="/res/BannerGameFigure.png" Stretch="Fill"/>
+        <TextBlock x:Name="SendersArgumentsTextBlock" HorizontalAlignment="Left" Margin="10,0,0,136" TextWrapping="Wrap" Text="Arguments for app:" Width="282" Height="36" VerticalAlignment="Bottom"/>
+        <ComboBox Style="{DynamicResource StyleComboBoxChooseGameInLauncher_CurrentGame}" x:Name="ComboBoxChooseGameInLauncher" HorizontalAlignment="Left" Margin="241,0,0,69" VerticalAlignment="Bottom" Width="62" Height="62" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}">
+            <ComboBoxItem>
+                <TextBlock x:Name="TextBlockInLauncherComboBoxChooseGame_SettingsGame" Text="Game settings" Foreground="#FFB5B5B5" />
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <TextBlock x:Name="TextBlockInLauncherComboBoxChooseGame_OpenInExplorer" Text="Open in explorer" Foreground="#FFB5B5B5"/>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <TextBlock x:Name="TextBlockInLauncherComboBoxChooseGame_CreateIcon" Text="Create icon in desktop" Foreground="#FFB5B5B5"/>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <TextBlock x:Name="TextBlockInLauncherComboBoxChooseGame_VerificationRecovery" Text="Verification and recovery" Foreground="#FFB5B5B5"/>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <TextBlock x:Name="TextBlockInLauncherComboBoxChooseGame_CheckUpdate" Text="Check new version" Foreground="#FFB5B5B5"/>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <TextBlock x:Name="TextBlockInLauncherComboBoxChooseGame_ChangeInstallParametrs" Text="Change install parametrs" Foreground="#FFB5B5B5"/>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <TextBlock x:Name="TextBlockInLauncherComboBoxChooseGame_RemoveGame" Text="Remove the game" Foreground="#FFB5B5B5"/>
+            </ComboBoxItem>
+        </ComboBox>
     </Grid>
 </Window>

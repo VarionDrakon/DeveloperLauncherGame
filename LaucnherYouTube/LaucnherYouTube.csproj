@@ -63,6 +63,7 @@
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -160,12 +161,23 @@
   <ItemGroup>
     <Resource Include="backgroundContent.png" />
     <Resource Include="reinstall.png" />
-    <Resource Include="res\BackgroundApp.png" />
     <Resource Include="res\Border.png" />
     <Resource Include="res\cancel.png" />
     <Resource Include="res\download.png" />
     <Resource Include="res\reinstall.png" />
     <Resource Include="res\update.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\GameCenterLogotype.png" />
+    <Resource Include="res\GameCoal.png" />
+    <Resource Include="res\GameDeatch.png" />
+    <Resource Include="res\GameFigure.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\BannerGameFigure.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\Gear.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
