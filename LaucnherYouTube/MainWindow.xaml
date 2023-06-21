@@ -336,7 +336,8 @@
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
-        <Style x:Key="StyleComboBoxChooseGameInLauncher_CurrentGame" TargetType="{x:Type ComboBox}">
+        <!--StyleComboBoxChooseGameInLauncher-->
+        <Style x:Key="StyleComboBoxChooseGameInLauncher" TargetType="{x:Type ComboBox}">
             <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual7}"/>
             <Setter Property="Background" Value="{StaticResource ComboBox.Static.Background}"/>
             <Setter Property="BorderBrush" Value="{StaticResource ComboBox.Static.Border}"/>
@@ -356,16 +357,20 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <!--StyleTextBlockInLauncherComboBoxChooseGame-->
+        <Style x:Key="StyleTextBlockInLauncherComboBoxChooseGame" TargetType="{x:Type TextBlock}">
+            <Setter Property="TextWrapping" Value="NoWrap"/>
+            <Setter Property="TextTrimming" Value="None"/>
+            <Setter Property="Foreground" Value="#FFE6E6E6"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Margin" Value="3,3,3,3"/>
+        </Style>
     </Window.Resources>
     <!--Next comes the markup-->
-    <Grid Margin="0,0,0,-6" Background="#FF0A0B17">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Rectangle Margin="0,0,0,561" Fill="#FF0A0B17" MouseDown="Image_MouseDown"/>
+    <Grid Margin="0,0,0,0" Background="#FF0A0B17">
+        <Rectangle Fill="#FF0A0B17" MouseDown="Image_MouseDown" Height="39" VerticalAlignment="Top"/>
         <TextBlock x:Name="_textCurrentVersion" HorizontalAlignment="Left" Margin="10,335,0,0" TextWrapping="NoWrap" Text="Current Version: " VerticalAlignment="Top" Height="16" Width="138"/>
         <TextBlock x:Name="_textServerVersion" HorizontalAlignment="Left" Margin="10,314,0,0" TextWrapping="Wrap" Text="Server version: " VerticalAlignment="Top" Height="16" Width="138"/>
-        <Button x:Name="LaunchGame" Content="Launch"   Click="ButtonLaunchGame" Margin="10,0,0,69" RenderTransformOrigin="0.589,0.526" Foreground="{DynamicResource ButtonForegroundTextCommon}" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" HorizontalContentAlignment="Center" FontSize="16" Height="62" VerticalAlignment="Bottom" Background="#FF009CFF" HorizontalAlignment="Left" Width="236"/>
         <TextBlock  x:Name="AppState" Margin="10,0,0,230" TextWrapping="Wrap" Text="Initializing game..." FontSize="11" Height="14" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="116"/>
         <TextBlock x:Name="DownloadAppState" Margin="10,0,0,0" TextWrapping="Wrap" Text="Initialize update..." Panel.ZIndex="1" Foreground="{DynamicResource ButtonForegroundTextCommon}" Height="39" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="236"/>
         <ProgressBar Name="ProgressBarExtractFile" Margin="10,0,0,39" Height="25" VerticalAlignment="Bottom" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" Background="Black" HorizontalAlignment="Left" Width="206">
@@ -416,28 +421,33 @@
         <Button x:Name="ButtonInLauncher_StopDownloadGame" Content="X" HorizontalAlignment="Left" Margin="221,542,0,0" VerticalAlignment="Top" Background="{x:Null}" Click="ButtonCancelDownloadApp" FontFamily="Arial" FontSize="16" BorderBrush="{x:Null}" Foreground="#FFE8E8E8" Width="25" Height="25"/>
         <Image x:Name="BannerInLauncher_GameFigure" HorizontalAlignment="Left" Height="125" Margin="-2,127,0,0" VerticalAlignment="Top" Width="250" Source="/res/BannerGameFigure.png" Stretch="Fill"/>
         <TextBlock x:Name="SendersArgumentsTextBlock" HorizontalAlignment="Left" Margin="10,0,0,136" TextWrapping="Wrap" Text="Arguments for app:" Width="282" Height="36" VerticalAlignment="Bottom"/>
-        <ComboBox Style="{DynamicResource StyleComboBoxChooseGameInLauncher_CurrentGame}" x:Name="ComboBoxChooseGameInLauncher" HorizontalAlignment="Left" Margin="241,0,0,69" VerticalAlignment="Bottom" Width="62" Height="62" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}">
-            <ComboBoxItem>
-                <TextBlock x:Name="TextBlockInLauncherComboBoxChooseGame_SettingsGame" Text="Game settings" Foreground="#FFB5B5B5" />
-            </ComboBoxItem>
-            <ComboBoxItem>
-                <TextBlock x:Name="TextBlockInLauncherComboBoxChooseGame_OpenInExplorer" Text="Open in explorer" Foreground="#FFB5B5B5"/>
-            </ComboBoxItem>
-            <ComboBoxItem>
-                <TextBlock x:Name="TextBlockInLauncherComboBoxChooseGame_CreateIcon" Text="Create icon in desktop" Foreground="#FFB5B5B5"/>
-            </ComboBoxItem>
-            <ComboBoxItem>
-                <TextBlock x:Name="TextBlockInLauncherComboBoxChooseGame_VerificationRecovery" Text="Verification and recovery" Foreground="#FFB5B5B5"/>
-            </ComboBoxItem>
-            <ComboBoxItem>
-                <TextBlock x:Name="TextBlockInLauncherComboBoxChooseGame_CheckUpdate" Text="Check new version" Foreground="#FFB5B5B5"/>
-            </ComboBoxItem>
-            <ComboBoxItem>
-                <TextBlock x:Name="TextBlockInLauncherComboBoxChooseGame_ChangeInstallParametrs" Text="Change install parametrs" Foreground="#FFB5B5B5"/>
-            </ComboBoxItem>
-            <ComboBoxItem>
-                <TextBlock x:Name="TextBlockInLauncherComboBoxChooseGame_RemoveGame" Text="Remove the game" Foreground="#FFB5B5B5"/>
-            </ComboBoxItem>
-        </ComboBox>
+
+        <Grid x:Name="GridChooseGameInLauncher" Margin="10,0,0,69" HorizontalAlignment="Left" Width="292" Height="62" VerticalAlignment="Bottom">
+            <Button x:Name="LaunchGame" Content="Launch"   Click="ButtonLaunchGame" RenderTransformOrigin="0.589,0.526" Foreground="{DynamicResource ButtonForegroundTextCommon}" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" HorizontalContentAlignment="Center" FontSize="16" Background="#FF009CFF" HorizontalAlignment="Left" Width="235"/>
+            <ComboBox Style="{DynamicResource StyleComboBoxChooseGameInLauncher}" x:Name="ComboBoxChooseGameInLauncher" HorizontalAlignment="Right" Width="59">
+                <ComboBoxItem>
+                    <TextBlock x:Name="TextBlockInLauncherComboBoxChooseGame_SettingsGame" Text="Game settings" Style="{DynamicResource StyleTextBlockInLauncherComboBoxChooseGame}"/>
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    <TextBlock x:Name="TextBlockInLauncherComboBoxChooseGame_OpenInExplorer" Text="Open in explorer" Style="{DynamicResource StyleTextBlockInLauncherComboBoxChooseGame}"/>
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    <TextBlock x:Name="TextBlockInLauncherComboBoxChooseGame_CreateIcon" Text="Create icon in desktop" Style="{DynamicResource StyleTextBlockInLauncherComboBoxChooseGame}"/>
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    <TextBlock x:Name="TextBlockInLauncherComboBoxChooseGame_VerificationRecovery" Text="Verification and recovery" Style="{DynamicResource StyleTextBlockInLauncherComboBoxChooseGame}"/>
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    <TextBlock x:Name="TextBlockInLauncherComboBoxChooseGame_CheckUpdate" Text="Check new version" Style="{DynamicResource StyleTextBlockInLauncherComboBoxChooseGame}"/>
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    <TextBlock x:Name="TextBlockInLauncherComboBoxChooseGame_ChangeInstallParametrs" Text="Change install parametrs" Style="{DynamicResource StyleTextBlockInLauncherComboBoxChooseGame}"/>
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    <TextBlock x:Name="TextBlockInLauncherComboBoxChooseGame_RemoveGame" Text="Remove the game" Style="{DynamicResource StyleTextBlockInLauncherComboBoxChooseGame}"/>
+                </ComboBoxItem>
+            </ComboBox>
+            <Image Source="/res/Gear.png" Stretch="Fill" IsHitTestVisible="False" Margin="0,6,4,6" Height="50" HorizontalAlignment="Right" Width="50"/>
+        </Grid>
     </Grid>
 </Window>
