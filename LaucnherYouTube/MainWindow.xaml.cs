@@ -218,7 +218,7 @@ namespace LaucnherYouTube
                 UserAllowUpdateApp = false;
             }
             ProgressBarExtractFile.Minimum = 0;
-            _textCurrentVersion.Text = "Current version: " + _stateLocateVersionXML;
+            //_textCurrentVersion.Text = "Current version: " + _stateLocateVersionXML;
             _textServerVersion.Text = "Server version: " + _stateServerVersionXML;
             Process[] processedUsers = Process.GetProcesses();
             foreach (Process allprocessed in processedUsers)
