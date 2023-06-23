@@ -102,8 +102,10 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <!--StyleButtonContentNewsInLauncher-->
         <SolidColorBrush x:Key="Button.Static.Background5" Color="#FFDDDDDD"/>
-        <SolidColorBrush x:Key="Button.Static.Border5" Color="#FF707070"/>
+        <SolidColorBrush x:Key="Button.Static.Border5"/>
+        <SolidColorBrush x:Key="Button.Static.Foreground5"/>
         <SolidColorBrush x:Key="Button.MouseOver.Background5" Color="#FFBEE6FD"/>
         <SolidColorBrush x:Key="Button.MouseOver.Border5" Color="#FF3C7FB1"/>
         <SolidColorBrush x:Key="Button.Pressed.Background5" Color="#FFC4E5F6"/>
@@ -111,11 +113,11 @@
         <SolidColorBrush x:Key="Button.Disabled.Background5" Color="#FFF4F4F4"/>
         <SolidColorBrush x:Key="Button.Disabled.Border5" Color="#FFADB2B5"/>
         <SolidColorBrush x:Key="Button.Disabled.Foreground5" Color="#FF838383"/>
-        <Style x:Key="broochButtonContent" TargetType="{x:Type Button}">
+        <Style x:Key="StyleButtonContentNewsInLauncher" TargetType="{x:Type Button}">
             <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual5}"/>
             <Setter Property="Background" Value="{StaticResource Button.Static.Background5}"/>
             <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border5}"/>
-            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="Foreground" Value="{StaticResource Button.Static.Foreground5}"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -341,7 +343,7 @@
             <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual7}"/>
             <Setter Property="Background" Value="{StaticResource ComboBox.Static.Background}"/>
             <Setter Property="BorderBrush" Value="{StaticResource ComboBox.Static.Border}"/>
-            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+            <Setter Property="Foreground" Value="#00000000"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
             <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
@@ -497,47 +499,46 @@
     </Window.Resources>
     <!--Next comes the markup-->
     <Grid Margin="0,0,0,0" Background="#FF0A0B17">
-        <Rectangle Fill="#FF0A0B17" MouseDown="Image_MouseDown" Height="73" VerticalAlignment="Top"/>
-        <TextBlock x:Name="ServerConnecting" HorizontalAlignment="Left" TextWrapping="Wrap" Text="CHECK SERVER..." VerticalAlignment="Top" Width="140" Height="20" Margin="65,26,0,0" Foreground="#FF949494" FontFamily="Arial" FontSize="16"/>
-
-        <ScrollViewer x:Name="ScrollViewerContent" Margin="10,155,138,0" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" PreviewMouseLeftButtonUp="ScrollViewerContent_PreviewMouseLeftButtonUp" PreviewMouseWheel="ScrollViewerContent_PreviewMouseWheel" PreviewMouseMove="ScrollViewerContent_PreviewMouseMove" PreviewMouseLeftButtonDown="ScrollViewerContent_PreviewMouseLeftButtonDown" Foreground="{x:Null}" Height="379" VerticalAlignment="Top" Visibility="Hidden">
-            <StackPanel x:Name="StackPanelScrollViewerContentServer" Orientation="Horizontal" Height="360" Width="2000">
-                <Button Style="{DynamicResource broochButtonContent}" x:Name="broochButtonContentServer_Content1" Cursor="Hand" BorderBrush="{x:Null}" Foreground="{x:Null}">
-                </Button>
-                <Button Style="{DynamicResource broochButtonContent}" x:Name="broochButtonContentServer_Content2" Cursor="Hand" BorderBrush="{x:Null}" Foreground="{x:Null}">
-                </Button>
-                <Button Style="{DynamicResource broochButtonContent}" x:Name="broochButtonContentServer_Content3" Cursor="Hand" BorderBrush="{x:Null}" Foreground="{x:Null}">
-                </Button>
-                <Button Style="{DynamicResource broochButtonContent}" x:Name="broochButtonContentServer_Content4" Cursor="Hand" BorderBrush="{x:Null}" Foreground="{x:Null}">
-                </Button>
-                <Button Style="{DynamicResource broochButtonContent}" x:Name="broochButtonContentServer_Content5" Cursor="Hand" BorderBrush="{x:Null}" Foreground="{x:Null}">
-                </Button>
-                <Button Style="{DynamicResource broochButtonContent}" x:Name="broochButtonContentServer_Content6" Cursor="Hand" BorderBrush="{x:Null}" Foreground="{x:Null}">
-                </Button>
-            </StackPanel>
-        </ScrollViewer>
-        <Button x:Name="OpenSettingsWindiowButton" VerticalAlignment="Top" Height="50" Content="" Click="OpenSettingsWindiowButton_Click" HorizontalAlignment="Left" Width="50" BorderBrush="{x:Null}" Margin="10,10,0,0" Focusable="False" Style="{DynamicResource ButtonMainStyle}" Foreground="{x:Null}">
-            <Button.Background>
-                <ImageBrush ImageSource="/res/GameCenterLogotype.png"/>
-            </Button.Background>
-        </Button>
-        <TextBlock x:Name="TextInWindow_recomendation" HorizontalAlignment="Left" Margin="10,137,0,0" Text="RECOMENDATION" VerticalAlignment="Top" FontFamily="Arial" FontSize="16" Foreground="#FFE8E8E8" Cursor="Arrow" Visibility="Hidden" />
-        <Button x:Name="ButtonInLauncher_InShop" Content="IN SHOP" Margin="0,135,138,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="16" Foreground="#FFE8E8E8" BorderBrush="{x:Null}" Background="#FF18182B" Style="{DynamicResource ButtonMainStyle}" HorizontalAlignment="Right" Width="70" Visibility="Hidden" />
-
-        <!--Button control header app-->
-        <Grid    Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" Width="50">
-            <Button x:Name="CloseApp" Content="X" Background="#00DDDDDD" Foreground="#FF4092A2" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" HorizontalAlignment="Right" Width="18" Height="18" VerticalAlignment="Top" Click="CloseApp_Click"/>
-            <Button x:Name="RollUpApp" Content="_" Margin="0,0,32,0" VerticalAlignment="Top" Background="#00DDDDDD" Height="18" Foreground="#FF4092A2" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" HorizontalAlignment="Right" Width="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" FontSize="11" Click="RollUpApp_Click" Focusable="False"/>
-            <Button x:Name="UnwrapApp" Content="=" Margin="0,0,18,0" VerticalAlignment="Top"   Background="#00DDDDDD" Height="18" Foreground="#FF4092A2" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" HorizontalAlignment="Right" Width="18" Click="UnwrapApp_Click"/>
+        <!--Content in laucnher app-->
+        <Grid Margin="305,127,0,0">
+            <ScrollViewer x:Name="ScrollViewerContent" Margin="10,10,10,10" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" PreviewMouseLeftButtonUp="ScrollViewerContent_PreviewMouseLeftButtonUp" PreviewMouseWheel="ScrollViewerContent_PreviewMouseWheel" PreviewMouseMove="ScrollViewerContent_PreviewMouseMove" PreviewMouseLeftButtonDown="ScrollViewerContent_PreviewMouseLeftButtonDown" Foreground="{x:Null}">
+                <StackPanel x:Name="StackPanelScrollViewerContentServer" Orientation="Horizontal" Height="360" Width="2000">
+                    <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content1" Cursor="Hand"/>
+                    <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content2" Cursor="Hand"/>
+                    <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content3" Cursor="Hand"/>
+                    <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content4" Cursor="Hand"/>
+                    <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content5" Cursor="Hand"/>
+                    <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content6" Cursor="Hand"/>
+                </StackPanel>
+            </ScrollViewer>
         </Grid>
-        <!--BannerInLauncher listen app-->
+        <!--Header app-->
         <Grid Height="122" VerticalAlignment="Top">
-            <Rectangle x:Name="BackgroundBorderListingApps" Margin="10,73,10,0" Fill="#FF18182B" Height="49" VerticalAlignment="Top" RadiusX="3" RadiusY="3"/>
-            <TextBlock x:Name="TextListenApp" HorizontalAlignment="Left" Margin="20,89,0,0" TextWrapping="Wrap" Text="LISTEN GAMES" VerticalAlignment="Top" Foreground="#FF949494"/>
-            <Image x:Name="IconGameCoal" HorizontalAlignment="Left" Height="40" Margin="123,77,0,0" VerticalAlignment="Top" Width="40" Source="/res/GameCoal.png"/>
-            <Image x:Name="IconGameDeatch" HorizontalAlignment="Left" Height="40" Margin="176,77,0,0" VerticalAlignment="Top" Width="40" Source="/res/GameDeatch.png"/>
-            <Image x:Name="IconGameFigure" HorizontalAlignment="Left" Height="40" Margin="228,77,0,0" VerticalAlignment="Top" Width="40" Source="/res/GameFigure.png"/>
+            <!--Header pp control-->
+            <Grid Height="60" VerticalAlignment="Top">
+                <TextBlock x:Name="ServerConnecting" HorizontalAlignment="Left" TextWrapping="Wrap" Text="CHECK SERVER..." VerticalAlignment="Top" Width="140" Height="20" Margin="65,26,0,0" Foreground="#FF949494" FontFamily="Arial" FontSize="16"/>
+                <Button x:Name="OpenSettingsWindiowButton" VerticalAlignment="Top" Height="50" Content="" Click="OpenSettingsWindiowButton_Click" HorizontalAlignment="Left" Width="50" BorderBrush="{x:Null}" Margin="10,10,0,0" Focusable="False" Style="{DynamicResource ButtonMainStyle}" Foreground="{x:Null}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/res/GameCenterLogotype.png"/>
+                    </Button.Background>
+                </Button>
+            </Grid>
+            <!--Button control header app-->
+            <Grid Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" Width="50">
+                <Button x:Name="CloseApp" Content="X" Background="#00DDDDDD" Foreground="#FF4092A2" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" HorizontalAlignment="Right" Width="18" Height="18" VerticalAlignment="Top" Click="CloseApp_Click"/>
+                <Button x:Name="RollUpApp" Content="_" Margin="0,0,32,0" VerticalAlignment="Top" Background="#00DDDDDD" Height="18" Foreground="#FF4092A2" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" HorizontalAlignment="Right" Width="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" FontSize="11" Click="RollUpApp_Click" Focusable="False"/>
+                <Button x:Name="UnwrapApp" Content="=" Margin="0,0,18,0" VerticalAlignment="Top"   Background="#00DDDDDD" Height="18" Foreground="#FF4092A2" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" HorizontalAlignment="Right" Width="18" Click="UnwrapApp_Click"/>
+            </Grid>
+            <!--BannerInLauncher listen app-->
+            <Grid Height="47" VerticalAlignment="Bottom" Margin="0,0,0,10">
+                <Rectangle x:Name="BackgroundBorderListingApps" Margin="10,0,10,0" Fill="#FF18182B" Height="49" VerticalAlignment="Top" RadiusX="3" RadiusY="3"/>
+                <TextBlock x:Name="TextListenApp" HorizontalAlignment="Left" Margin="20,15,0,0" TextWrapping="Wrap" Text="LISTEN GAMES" VerticalAlignment="Top" Foreground="#FF949494"/>
+                <Image x:Name="IconGameCoal" HorizontalAlignment="Left" Height="40" Margin="123,5,0,0" VerticalAlignment="Top" Width="40" Source="/res/GameCoal.png"/>
+                <Image x:Name="IconGameDeatch" HorizontalAlignment="Left" Height="40" Margin="176,5,0,0" VerticalAlignment="Top" Width="40" Source="/res/GameDeatch.png"/>
+                <Image x:Name="IconGameFigure" HorizontalAlignment="Left" Height="40" Margin="228,5,0,0" VerticalAlignment="Top" Width="40" Source="/res/GameFigure.png"/>
+            </Grid>
         </Grid>
+        <!--Left banner choose game-->
         <Grid x:Name="GridInLauncherContentChooseGame" Margin="0,122,0,0" HorizontalAlignment="Left" Width="305">
             <!--BannerInLauncherMainChooseGame-->
             <Grid Height="243" VerticalAlignment="Bottom" Margin="0,0,0,13">
@@ -546,8 +547,9 @@
                 <TextBlock Style="{DynamicResource StyleTextBlockInLauncherMainTextChooseGame}" x:Name="AppState" Margin="10,49,0,0" Text="Initializing game..."/>
                 <TextBlock Style="{DynamicResource StyleTextBlockInLauncherMainTextChooseGame}" x:Name="SendersArgumentsTextBlock" Margin="10,75,0,0" Text="Arguments for app:" Height="36" />
                 <TextBlock Style="{DynamicResource StyleTextBlockInLauncherMainTextChooseGame}" x:Name="DownloadAppState" Margin="17,210,30,10" Text="Initialize update..." Panel.ZIndex="1" Height="NaN" Width="NaN" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
-                <Button x:Name="ButtonInLauncher_StopDownloadGame" Content="X" Margin="277,203,0,22" Background="{x:Null}" Click="ButtonCancelDownloadApp" FontFamily="Arial" FontSize="16" BorderBrush="{x:Null}" Foreground="#FFE8E8E8" Width="25" Height="25"/>
-                <ProgressBar Name="ProgressBarExtractFile" Margin="10,0,25,22" Height="26" VerticalAlignment="Bottom" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" Background="#FF000E17">
+                <Button x:Name="ButtonInLauncher_StopDownloadGame" Content="X" Margin="280,203,0,15" Background="{x:Null}" Click="ButtonCancelDownloadApp" FontFamily="Arial" FontSize="16" BorderBrush="{x:Null}" Foreground="#FFE8E8E8" Width="25" Height="25"/>
+
+                <ProgressBar Name="ProgressBarExtractFile" Margin="10,0,25,15" Height="25" Width="270" VerticalAlignment="Bottom" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" Background="#FF000E17">
                     <ProgressBar.Foreground>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                             <GradientStop Color="#FF009CFF"/>
