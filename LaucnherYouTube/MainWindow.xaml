@@ -502,13 +502,13 @@
     <Grid Margin="0,0,0,0" Background="#FF0A0B17">
         <!--Content in laucnher app-->
         <Grid Margin="305,127,0,0">
+            
             <ScrollViewer Height="100" VerticalAlignment="Top" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
                 <StackPanel Orientation="Horizontal" Width="575">
-                    <Button Content="Button" Width="40" Height="100"/>
-                    <Button Content="Button"/>
+                    <Rectangle Height="100" Width="100" Fill="#FF008821"/>
+
                 </StackPanel>
             </ScrollViewer>
-
 
             <ScrollViewer x:Name="ScrollViewerContent" Margin="0,100,0,10" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" PreviewMouseLeftButtonUp="ScrollViewerContent_PreviewMouseLeftButtonUp" PreviewMouseWheel="ScrollViewerContent_PreviewMouseWheel" PreviewMouseMove="ScrollViewerContent_PreviewMouseMove" PreviewMouseLeftButtonDown="ScrollViewerContent_PreviewMouseLeftButtonDown" Foreground="{x:Null}" HorizontalAlignment="Left" Width="336">
                 <StackPanel x:Name="StackPanelScrollViewerContentServer" Orientation="Vertical" Height="2200" Width="336">
