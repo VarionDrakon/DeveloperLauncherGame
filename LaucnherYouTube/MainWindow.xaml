@@ -123,6 +123,7 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Padding" Value="1"/>
             <Setter Property="Margin" Value="3px"/>
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Height" Value="350"/>
             <Setter Property="Width" Value="320"/>
             <Setter Property="Template">
@@ -501,14 +502,22 @@
     <Grid Margin="0,0,0,0" Background="#FF0A0B17">
         <!--Content in laucnher app-->
         <Grid Margin="305,127,0,0">
-            <ScrollViewer x:Name="ScrollViewerContent" Margin="10,10,10,10" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" PreviewMouseLeftButtonUp="ScrollViewerContent_PreviewMouseLeftButtonUp" PreviewMouseWheel="ScrollViewerContent_PreviewMouseWheel" PreviewMouseMove="ScrollViewerContent_PreviewMouseMove" PreviewMouseLeftButtonDown="ScrollViewerContent_PreviewMouseLeftButtonDown" Foreground="{x:Null}">
-                <StackPanel x:Name="StackPanelScrollViewerContentServer" Orientation="Horizontal" Height="360" Width="2000">
-                    <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content1" Cursor="Hand"/>
-                    <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content2" Cursor="Hand"/>
-                    <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content3" Cursor="Hand"/>
-                    <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content4" Cursor="Hand"/>
-                    <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content5" Cursor="Hand"/>
-                    <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content6" Cursor="Hand"/>
+            <ScrollViewer Height="100" VerticalAlignment="Top" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
+                <StackPanel Orientation="Horizontal" Width="575">
+                    <Button Content="Button" Width="40" Height="100"/>
+                    <Button Content="Button"/>
+                </StackPanel>
+            </ScrollViewer>
+
+
+            <ScrollViewer x:Name="ScrollViewerContent" Margin="0,100,0,10" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" PreviewMouseLeftButtonUp="ScrollViewerContent_PreviewMouseLeftButtonUp" PreviewMouseWheel="ScrollViewerContent_PreviewMouseWheel" PreviewMouseMove="ScrollViewerContent_PreviewMouseMove" PreviewMouseLeftButtonDown="ScrollViewerContent_PreviewMouseLeftButtonDown" Foreground="{x:Null}" HorizontalAlignment="Left" Width="336">
+                <StackPanel x:Name="StackPanelScrollViewerContentServer" Orientation="Vertical" Height="2200" Width="336">
+                    <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content1" Height="347" Width="318"/>
+                    <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content2"/>
+                    <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content3"/>
+                    <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content4"/>
+                    <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content5"/>
+                    <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content6"/>
                 </StackPanel>
             </ScrollViewer>
         </Grid>
@@ -516,6 +525,7 @@
         <Grid Height="122" VerticalAlignment="Top">
             <!--Header pp control-->
             <Grid Height="60" VerticalAlignment="Top">
+                <Rectangle Fill="#FF0A0B17" MouseDown="Image_MouseDown"/>
                 <TextBlock x:Name="ServerConnecting" HorizontalAlignment="Left" TextWrapping="Wrap" Text="CHECK SERVER..." VerticalAlignment="Top" Width="140" Height="20" Margin="65,26,0,0" Foreground="#FF949494" FontFamily="Arial" FontSize="16"/>
                 <Button x:Name="OpenSettingsWindiowButton" VerticalAlignment="Top" Height="50" Content="" Click="OpenSettingsWindiowButton_Click" HorizontalAlignment="Left" Width="50" BorderBrush="{x:Null}" Margin="10,10,0,0" Focusable="False" Style="{DynamicResource ButtonMainStyle}" Foreground="{x:Null}">
                     <Button.Background>
