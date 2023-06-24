@@ -501,8 +501,11 @@
     <!--Next comes the markup-->
     <Grid Margin="0,0,0,0" Background="#FF0A0B17">
         <!--Content in laucnher app-->
-        <Grid Margin="305,127,0,0">
+        <Viewbox>
             
+        </Viewbox>
+        <Grid Margin="305,127,0,0">
+
             <ScrollViewer Height="100" VerticalAlignment="Top" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
                 <StackPanel Orientation="Horizontal" Width="575">
                     <Rectangle Height="100" Width="100" Fill="#FF008821"/>
