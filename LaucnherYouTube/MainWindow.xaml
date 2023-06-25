@@ -499,14 +499,14 @@
     <Grid Margin="0,0,0,0" Background="#FF0A0B17">
         <!--Content in laucnher app-->
         <Grid Margin="305,127,0,0" ShowGridLines="True">
-            <ScrollViewer x:Name="ScrollViewerContent" Margin="0,0,5,4" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" PreviewMouseLeftButtonUp="ScrollViewerContent_PreviewMouseLeftButtonUp" PreviewMouseWheel="ScrollViewerContent_PreviewMouseWheel" PreviewMouseMove="ScrollViewerContent_PreviewMouseMove" PreviewMouseLeftButtonDown="ScrollViewerContent_PreviewMouseLeftButtonDown" Foreground="{x:Null}">
-                <UniformGrid Rows="1">
+            <ScrollViewer x:Name="ScrollViewerContent" Margin="0,0,5,4" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" PreviewMouseLeftButtonUp="ScrollViewerContent_PreviewMouseLeftButtonUp" PreviewMouseWheel="ScrollViewerContent_PreviewMouseWheel" PreviewMouseMove="ScrollViewerContent_PreviewMouseMove" PreviewMouseLeftButtonDown="ScrollViewerContent_PreviewMouseLeftButtonDown" Foreground="{x:Null}"> 
+                <UniformGrid Rows="1" Columns="1" Height="283" Width="412">
                     <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content1"/>
-                    <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content2"/>
-                    <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content3"/>
-                    <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content4"/>
-                    <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content5"/>
-                    <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content6"/>
+                        <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content2"/>
+                        <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content3"/>
+                        <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content4"/>
+                        <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content5"/>
+                        <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content6"/>
                 </UniformGrid>
             </ScrollViewer>
         </Grid>
