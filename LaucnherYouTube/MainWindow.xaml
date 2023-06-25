@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:LaucnherYouTube"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="900" Foreground="#FFFFFBFB" WindowStartupLocation="CenterScreen"
     xmlns:System="clr-namespace:System;assembly=mscorlib" WindowStyle="None" ResizeMode="NoResize"
@@ -124,8 +123,6 @@
             <Setter Property="Padding" Value="1"/>
             <Setter Property="Margin" Value="3px"/>
             <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Height" Value="350"/>
-            <Setter Property="Width" Value="320"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -501,27 +498,16 @@
     <!--Next comes the markup-->
     <Grid Margin="0,0,0,0" Background="#FF0A0B17">
         <!--Content in laucnher app-->
-        <Viewbox>
-            
-        </Viewbox>
-        <Grid Margin="305,127,0,0">
-
-            <ScrollViewer Height="100" VerticalAlignment="Top" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
-                <StackPanel Orientation="Horizontal" Width="575">
-                    <Rectangle Height="100" Width="100" Fill="#FF008821"/>
-
-                </StackPanel>
-            </ScrollViewer>
-
-            <ScrollViewer x:Name="ScrollViewerContent" Margin="0,100,0,10" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" PreviewMouseLeftButtonUp="ScrollViewerContent_PreviewMouseLeftButtonUp" PreviewMouseWheel="ScrollViewerContent_PreviewMouseWheel" PreviewMouseMove="ScrollViewerContent_PreviewMouseMove" PreviewMouseLeftButtonDown="ScrollViewerContent_PreviewMouseLeftButtonDown" Foreground="{x:Null}" HorizontalAlignment="Left" Width="336">
-                <StackPanel x:Name="StackPanelScrollViewerContentServer" Orientation="Vertical" Height="2200" Width="336">
-                    <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content1" Height="347" Width="318"/>
+        <Grid Margin="305,127,0,0" ShowGridLines="True">
+            <ScrollViewer x:Name="ScrollViewerContent" Margin="0,0,5,4" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" PreviewMouseLeftButtonUp="ScrollViewerContent_PreviewMouseLeftButtonUp" PreviewMouseWheel="ScrollViewerContent_PreviewMouseWheel" PreviewMouseMove="ScrollViewerContent_PreviewMouseMove" PreviewMouseLeftButtonDown="ScrollViewerContent_PreviewMouseLeftButtonDown" Foreground="{x:Null}">
+                <UniformGrid Rows="1">
+                    <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content1"/>
                     <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content2"/>
                     <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content3"/>
                     <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content4"/>
                     <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content5"/>
                     <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content6"/>
-                </StackPanel>
+                </UniformGrid>
             </ScrollViewer>
         </Grid>
         <!--Header app-->
@@ -545,10 +531,9 @@
             <!--BannerInLauncher listen app-->
             <Grid Height="47" VerticalAlignment="Bottom" Margin="0,0,0,10">
                 <Rectangle x:Name="BackgroundBorderListingApps" Margin="10,0,10,0" Fill="#FF18182B" Height="49" VerticalAlignment="Top" RadiusX="3" RadiusY="3"/>
-                <TextBlock x:Name="TextListenApp" HorizontalAlignment="Left" Margin="20,15,0,0" TextWrapping="Wrap" Text="LISTEN GAMES" VerticalAlignment="Top" Foreground="#FF949494"/>
+                <TextBlock x:Name="TextListenApp" HorizontalAlignment="Left" Margin="20,15,0,0" TextWrapping="Wrap" Text="OTHER GAMES" VerticalAlignment="Top" Foreground="#FF949494"/>
                 <Image x:Name="IconGameCoal" HorizontalAlignment="Left" Height="40" Margin="123,5,0,0" VerticalAlignment="Top" Width="40" Source="/res/GameCoal.png"/>
                 <Image x:Name="IconGameDeatch" HorizontalAlignment="Left" Height="40" Margin="176,5,0,0" VerticalAlignment="Top" Width="40" Source="/res/GameDeatch.png"/>
-                <Image x:Name="IconGameFigure" HorizontalAlignment="Left" Height="40" Margin="228,5,0,0" VerticalAlignment="Top" Width="40" Source="/res/GameFigure.png"/>
             </Grid>
         </Grid>
         <!--Left banner choose game-->
