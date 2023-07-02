@@ -603,7 +603,7 @@
                 <TextBlock Style="{DynamicResource StyleTextBlockInLauncherMainTextChooseGame}" x:Name="_textServerVersion" Margin="10,0,0,0" Text="Server version: "/>
                 <TextBlock Style="{DynamicResource StyleTextBlockInLauncherMainTextChooseGame}" x:Name="AppState" Margin="10,49,0,0" Text="Initializing game..."/>
                 <TextBlock Style="{DynamicResource StyleTextBlockInLauncherMainTextChooseGame}" x:Name="SendersArgumentsTextBlock" Margin="10,75,0,0" Text="Arguments for app:" Height="36" />
-                <TextBlock Style="{DynamicResource StyleTextBlockInLauncherMainTextChooseGame}" x:Name="DownloadAppState" Margin="17,210,30,10" Text="Initialize update..." Panel.ZIndex="1" Height="NaN" Width="NaN" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                <TextBlock Style="{DynamicResource StyleTextBlockInLauncherMainTextChooseGame}" x:Name="DownloadAppState" Margin="13,203,30,10" Text="Initialize update..." Panel.ZIndex="1" Height="NaN" Width="NaN" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
                 <Button Style="{DynamicResource StyleButtonInLauncherMainChooseGame}" x:Name="ButtonInLauncher_StopDownloadGame" Content="X" Margin="280,203,0,15" Click="ButtonCancelDownloadApp" Width="25" Height="25" IsEnabled="False"/>
 
                 <ProgressBar Name="ProgressBarExtractFile" Margin="10,0,25,15" Height="25" Width="270" VerticalAlignment="Bottom" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" Background="#FF000E17">
@@ -615,15 +615,15 @@
                     </ProgressBar.Foreground>
                 </ProgressBar>
 
-                <ComboBox Style="{DynamicResource StyleComboBoxChooseGameInLauncher}" VerticalAlignment="Center" Margin="10,0,3,0" IsEditable="True">
+                <ComboBox x:Name="ComboBoxChooseGameInLauncherAddOptions" Style="{DynamicResource StyleComboBoxChooseGameInLauncher}" VerticalAlignment="Center" Margin="10,0,3,0" IsEditable="True" SelectionChanged="ComboBoxChooseGameInLauncherAddOptions_SelectionChanged" DropDownClosed="ComboBoxChooseGameInLauncherAddOptions_DropDownClosed" >
                     <ComboBoxItem>
-                        <Button Style="{DynamicResource StyleButtonLauncherAdditionalOptionChooseGame}" x:Name="ButtonInLauncher_KillStartedGame" Content="Kill game" MouseDown="ButtonKillProcessApp"/>
+                        <TextBlock Text="Kill game" Style="{DynamicResource StyleTextBlockInLauncherComboBoxChooseGame}" />
                     </ComboBoxItem>
                     <ComboBoxItem>
-                        <Button Style="{DynamicResource StyleButtonLauncherAdditionalOptionChooseGame}" x:Name="ButtonInLauncher_ReinstallApp" Content="Reinstall app" MouseDown="ButtonUpdateDialogWindow"/>
+                        <TextBlock Text="Reinstall app" Style="{DynamicResource StyleTextBlockInLauncherComboBoxChooseGame}" />
                     </ComboBoxItem>
                     <ComboBoxItem>
-                        <Button Style="{DynamicResource StyleButtonLauncherAdditionalOptionChooseGame}" x:Name="ButtonInLauncher_CheckUpdate" Content="Check update" MouseDown="ButtonFoundNewVersion"/>
+                        <TextBlock Text="Check update" Style="{DynamicResource StyleTextBlockInLauncherComboBoxChooseGame}" />
                     </ComboBoxItem>
                 </ComboBox>
                 <TextBlock Style="{DynamicResource StyleTextBlockInLauncherMainTextChooseGame}" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="Additional options" VerticalAlignment="Center" Height="12" Width="NaN" Margin="13,0,5,0" IsHitTestVisible="False"/>
@@ -632,9 +632,9 @@
             <!--Banner In Launcher Button install and option-->
             <Grid Margin="10,0,3,58" Height="62" VerticalAlignment="Bottom">
                 <Button Style="{DynamicResource StyleButtonInLauncherMainChooseGame}"  x:Name="LaunchGame" Content="Launch" Click="ButtonLaunchGame" RenderTransformOrigin="0.589,0.526" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" HorizontalContentAlignment="Center" FontSize="16" HorizontalAlignment="Left" Width="235"/>
-                <ComboBox Style="{DynamicResource StyleComboBoxChooseGameInLauncher}" x:Name="ComboBoxChooseGameInLauncher" HorizontalAlignment="Right" Width="59" IsEditable="True">
+                <ComboBox x:Name="ComboBoxChooseGameInLauncher" Style="{DynamicResource StyleComboBoxChooseGameInLauncher}" SelectionChanged="ComboBoxChooseGameInLauncher_SelectionChanged" DropDownClosed="ComboBoxChooseGameInLauncher_DropDownClosed" HorizontalAlignment="Right" Width="59" IsEditable="True">
                     <ComboBoxItem>
-                        <TextBlock x:Name="TextBlockInLauncherComboBoxChooseGame_SettingsGame" Text="Game settings" Style="{DynamicResource StyleTextBlockInLauncherComboBoxChooseGame}"/>
+                        <TextBlock x:Name="TextBlockInLauncherComboBoxChooseGame_SettingsGame" Text="Game settings" Style="{DynamicResource StyleTextBlockInLauncherComboBoxChooseGame}" />
                     </ComboBoxItem>
                     <ComboBoxItem>
                         <TextBlock x:Name="TextBlockInLauncherComboBoxChooseGame_OpenInExplorer" Text="Open in explorer" Style="{DynamicResource StyleTextBlockInLauncherComboBoxChooseGame}"/>

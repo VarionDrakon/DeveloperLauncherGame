@@ -10,6 +10,7 @@ using System.Net.Http.Handlers;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -87,7 +88,7 @@ namespace LaucnherYouTube
             catch
             {
                 ServerConnecting.Text = "SERVER OFFLINE!";
-                ButtonInLauncher_CheckUpdate.IsEnabled = false;
+                //ButtonInLauncher_CheckUpdate.IsEnabled = false;
             }
         }
         private void CompleteDownloadVersionXMLServer(object sender, AsyncCompletedEventArgs e)
@@ -118,21 +119,12 @@ namespace LaucnherYouTube
         }
         #endregion
         #region UIFUNC
-        private void ButtonFoundNewVersion(object sender, RoutedEventArgs e)
-        {
-            ChildWindow.AllowUpdate allowUpdateWindow = new ChildWindow.AllowUpdate();
-            allowUpdateWindow.Show();
-        }
         private void UpdateUI()
         {
             dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(BackgroundUIFunction);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
             dispatcherTimer.Start();
-        }
-        private void ButtonUpdateDialogWindow(object sender, RoutedEventArgs rea)
-        {
-            ServerDownloadChacheGameAsync();
         }
         private void ButtonCancelDownloadApp(object sender, RoutedEventArgs e)
         {
@@ -145,7 +137,7 @@ namespace LaucnherYouTube
             {
                 DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text = "State: " + ex.Message.ToString());
             }
-            ButtonInLauncher_ReinstallApp.IsEnabled = true;
+           // ButtonInLauncher_ReinstallApp.IsEnabled = true;
             ButtonInLauncher_StopDownloadGame.IsEnabled = false;
         }
         private void ButtonLaunchGame(object sender, RoutedEventArgs rea)
@@ -158,20 +150,11 @@ namespace LaucnherYouTube
                 processApp.StartInfo.Arguments = ArgumentsAppString;
                 processApp.Start();
                 idProcessApp = processApp.Id;
-                ButtonInLauncher_KillStartedGame.IsEnabled = true;
+                //ButtonInLauncher_KillStartedGame.IsEnabled = true;
             }
             catch (Exception e)
             {
                 LoggingProcessJobs("EXCEPTION" + e.Message.ToString());
-            }
-        }
-        private void ButtonKillProcessApp(object sender, RoutedEventArgs e)
-        {
-            if (appIsStarting == true)
-            {
-                processApp.Kill();
-                processApp.Dispose();
-                ButtonInLauncher_KillStartedGame.IsEnabled = false;
             }
         }
         private void ProgressMessageHandler_HttpReceiveProgress(object sender, HttpProgressEventArgs e)
@@ -208,12 +191,12 @@ namespace LaucnherYouTube
         {
             if (_stateLocateVersionXML != _stateServerVersionXML & checkUpdate == true)
             {
-                ButtonInLauncher_CheckUpdate.IsEnabled = true;
+                //ButtonInLauncher_CheckUpdate.IsEnabled = true;
                 checkUpdate = false;
             }
             if (UserAllowUpdateApp == true)
             {
-                ButtonInLauncher_CheckUpdate.IsEnabled = false;
+              //  ButtonInLauncher_CheckUpdate.IsEnabled = false;
                 ServerDownloadChacheGameAsync();
                 UserAllowUpdateApp = false;
             }
@@ -267,8 +250,8 @@ namespace LaucnherYouTube
             ButtonInLauncher_StopDownloadGame.IsEnabled = true;
             try
             {
-                ButtonInLauncher_ReinstallApp.IsEnabled = false;
-                ButtonInLauncher_CheckUpdate.IsEnabled = false;
+                //ButtonInLauncher_ReinstallApp.IsEnabled = false;
+                //ButtonInLauncher_CheckUpdate.IsEnabled = false;
                 if (cancelTokenSource == null || cancelTokenSource.IsCancellationRequested)
                 {
                     cancelTokenSource = new CancellationTokenSource();
@@ -294,8 +277,8 @@ namespace LaucnherYouTube
                     catch (Exception e)
                     {
                         DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text = "State: " + e.Message.ToString());
-                        ButtonInLauncher_ReinstallApp.Dispatcher.Invoke(() => ButtonInLauncher_ReinstallApp.IsEnabled = true);
-                        ButtonInLauncher_CheckUpdate.Dispatcher.Invoke(() => ButtonInLauncher_CheckUpdate.IsEnabled = true);
+                       // ButtonInLauncher_ReinstallApp.Dispatcher.Invoke(() => ButtonInLauncher_ReinstallApp.IsEnabled = true);
+                      //  ButtonInLauncher_CheckUpdate.Dispatcher.Invoke(() => ButtonInLauncher_CheckUpdate.IsEnabled = true);
                         cancelTokenSource.Dispose();
                         streamFileServer.Dispose();
                         fileStreamServer.Dispose();
@@ -350,8 +333,8 @@ namespace LaucnherYouTube
                     }
                     DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text = "Game install!");
                     ProgressBarExtractFile.Dispatcher.Invoke(() => ProgressBarExtractFile.Value = 0);
-                    ButtonInLauncher_ReinstallApp.Dispatcher.Invoke(() => ButtonInLauncher_ReinstallApp.IsEnabled = true);
-                    ButtonInLauncher_CheckUpdate.Dispatcher.Invoke(() => ButtonInLauncher_CheckUpdate.IsEnabled = true);
+                    //ButtonInLauncher_ReinstallApp.Dispatcher.Invoke(() => ButtonInLauncher_ReinstallApp.IsEnabled = true);
+                   // ButtonInLauncher_CheckUpdate.Dispatcher.Invoke(() => ButtonInLauncher_CheckUpdate.IsEnabled = true);
                     return;
                 }, cancellationToken);
             }
@@ -411,6 +394,85 @@ namespace LaucnherYouTube
             {
                 settingsWindow.Show();
                 IsOpenWindowSetting = true;
+            }
+        }
+        private bool ComboBoxChooseGameInLauncherHandle = true;
+        private void ComboBoxChooseGameInLauncher_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (ComboBoxChooseGameInLauncherHandle) ComboBoxChooseGameInLauncher_Handle();
+            ComboBoxChooseGameInLauncherHandle = true;
+        }
+
+        private void ComboBoxChooseGameInLauncher_DropDownClosed(object sender, EventArgs e)
+        {
+            ComboBox ComboBoxChooseGameInLauncher = sender as ComboBox;
+            ComboBoxChooseGameInLauncherHandle = !ComboBoxChooseGameInLauncher.IsDropDownOpen;
+            ComboBoxChooseGameInLauncher_Handle();
+        }
+        private void ComboBoxChooseGameInLauncher_Handle()
+        {
+            switch (ComboBoxChooseGameInLauncher.SelectedIndex)
+            {
+                case 0:
+                    Close();
+                    ComboBoxChooseGameInLauncher.SelectedIndex = -1;
+                    break;
+                case 1:
+                    Process.Start(@".\");
+                    ComboBoxChooseGameInLauncher.SelectedIndex = -1;
+                    break;
+                case 2:
+                    ComboBoxChooseGameInLauncher.SelectedIndex = -1;
+                    break;
+                case 3:
+                    ComboBoxChooseGameInLauncher.SelectedIndex = -1;
+                    break;
+                case 4:
+                    ComboBoxChooseGameInLauncher.SelectedIndex = -1;
+                    break;
+                case 5:
+                    ComboBoxChooseGameInLauncher.SelectedIndex = -1;
+                    break;
+                case 6:
+                    ComboBoxChooseGameInLauncher.SelectedIndex = -1;
+                    break;
+            }
+        }  
+        private bool ComboBoxChooseGameInLauncherAddOptionsHandle = true;
+        private void ComboBoxChooseGameInLauncherAddOptions_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (ComboBoxChooseGameInLauncherAddOptionsHandle) ComboBoxChooseGameInLauncherAddOptions_Handle();
+            ComboBoxChooseGameInLauncherAddOptionsHandle = true;
+        }
+
+        private void ComboBoxChooseGameInLauncherAddOptions_DropDownClosed(object sender, EventArgs e)
+        {
+            ComboBox ComboBoxChooseGameInLauncherAddOptions = sender as ComboBox;
+            ComboBoxChooseGameInLauncherAddOptionsHandle = !ComboBoxChooseGameInLauncherAddOptions.IsDropDownOpen;
+            ComboBoxChooseGameInLauncherAddOptions_Handle();
+        }
+        private void ComboBoxChooseGameInLauncherAddOptions_Handle()
+        {
+            switch (ComboBoxChooseGameInLauncherAddOptions.SelectedIndex)
+            {
+                case 0:
+                    if (appIsStarting == true)
+                    {
+                        processApp.Kill();
+                        processApp.Dispose();
+                        //ButtonInLauncher_KillStartedGame.IsEnabled = false;
+                    }
+                    ComboBoxChooseGameInLauncherAddOptions.SelectedIndex = -1;
+                    break;
+                case 1:
+                    ServerDownloadChacheGameAsync();
+                    ComboBoxChooseGameInLauncherAddOptions.SelectedIndex = -1;
+                    break;
+                case 2:
+                    AllowUpdate allowUpdateWindow = new AllowUpdate();
+                    allowUpdateWindow.Show();
+                    ComboBoxChooseGameInLauncherAddOptions.SelectedIndex = -1;
+                    break;
             }
         }
     }
