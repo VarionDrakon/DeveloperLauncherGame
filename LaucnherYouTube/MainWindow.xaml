@@ -494,6 +494,57 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="FocusVisual10">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!--StyleButtonInLauncherMainChooseGame-->
+        <SolidColorBrush x:Key="Button.Static.Background9" Color="#FF009CFF"/>
+        <SolidColorBrush x:Key="Button.Static.Border9"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background9"  Color="#FF0085DA"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background9" Color="#FF0069AB"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background8"  Color="#FF006BAF"/>
+        <Style x:Key="StyleButtonInLauncherMainChooseGame" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual10}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background9}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border9}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background9}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background9}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background8}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <!--Next comes the markup-->
     <Grid Margin="0,0,0,0" Background="#FF0A0B17">
@@ -505,16 +556,18 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <ScrollViewer Grid.Column="0" Grid.Row="0" x:Name="ScrollViewerContent" Margin="0,0,5,4" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" PreviewMouseLeftButtonUp="ScrollViewerContent_PreviewMouseLeftButtonUp" PreviewMouseWheel="ScrollViewerContent_PreviewMouseWheel" PreviewMouseMove="ScrollViewerContent_PreviewMouseMove" PreviewMouseLeftButtonDown="ScrollViewerContent_PreviewMouseLeftButtonDown" Foreground="{x:Null}">
-                <WrapPanel Orientation="Vertical" ItemHeight="350" ItemWidth="350">
-                    <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content1"/>
+            <Viewbox>
+                <ScrollViewer Grid.Column="0" Grid.Row="0" x:Name="ScrollViewerContent" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" PreviewMouseLeftButtonUp="ScrollViewerContent_PreviewMouseLeftButtonUp" PreviewMouseWheel="ScrollViewerContent_PreviewMouseWheel" PreviewMouseMove="ScrollViewerContent_PreviewMouseMove" PreviewMouseLeftButtonDown="ScrollViewerContent_PreviewMouseLeftButtonDown" Foreground="{x:Null}" Width="200"  Height="200">
+                    <WrapPanel Orientation="Vertical" ItemHeight="200" ItemWidth="200">
+                        <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content1"/>
                         <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content2"/>
                         <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content3"/>
                         <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content4"/>
                         <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content5"/>
-                    <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content6"/>
-                </WrapPanel>
-            </ScrollViewer>
+                        <Button Style="{DynamicResource StyleButtonContentNewsInLauncher}" x:Name="broochButtonContentServer_Content6"/>
+                    </WrapPanel>
+                </ScrollViewer>
+            </Viewbox>
         </Grid>
         <!--Header app-->
         <Grid Height="122" VerticalAlignment="Top">
@@ -551,7 +604,7 @@
                 <TextBlock Style="{DynamicResource StyleTextBlockInLauncherMainTextChooseGame}" x:Name="AppState" Margin="10,49,0,0" Text="Initializing game..."/>
                 <TextBlock Style="{DynamicResource StyleTextBlockInLauncherMainTextChooseGame}" x:Name="SendersArgumentsTextBlock" Margin="10,75,0,0" Text="Arguments for app:" Height="36" />
                 <TextBlock Style="{DynamicResource StyleTextBlockInLauncherMainTextChooseGame}" x:Name="DownloadAppState" Margin="17,210,30,10" Text="Initialize update..." Panel.ZIndex="1" Height="NaN" Width="NaN" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
-                <Button x:Name="ButtonInLauncher_StopDownloadGame" Content="X" Margin="280,203,0,15" Background="{x:Null}" Click="ButtonCancelDownloadApp" FontFamily="Arial" FontSize="16" BorderBrush="{x:Null}" Foreground="#FFE8E8E8" Width="25" Height="25"/>
+                <Button Style="{DynamicResource StyleButtonInLauncherMainChooseGame}" x:Name="ButtonInLauncher_StopDownloadGame" Content="X" Margin="280,203,0,15" Click="ButtonCancelDownloadApp" Width="25" Height="25" IsEnabled="False"/>
 
                 <ProgressBar Name="ProgressBarExtractFile" Margin="10,0,25,15" Height="25" Width="270" VerticalAlignment="Bottom" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" Background="#FF000E17">
                     <ProgressBar.Foreground>
@@ -562,7 +615,7 @@
                     </ProgressBar.Foreground>
                 </ProgressBar>
 
-                <ComboBox Style="{DynamicResource StyleComboBoxChooseGameInLauncher}" VerticalAlignment="Center" Margin="10,0,3,0">
+                <ComboBox Style="{DynamicResource StyleComboBoxChooseGameInLauncher}" VerticalAlignment="Center" Margin="10,0,3,0" IsEditable="True">
                     <ComboBoxItem>
                         <Button Style="{DynamicResource StyleButtonLauncherAdditionalOptionChooseGame}" x:Name="ButtonInLauncher_KillStartedGame" Content="Kill game" MouseDown="ButtonKillProcessApp"/>
                     </ComboBoxItem>
@@ -578,8 +631,8 @@
             </Grid>
             <!--Banner In Launcher Button install and option-->
             <Grid Margin="10,0,3,58" Height="62" VerticalAlignment="Bottom">
-                <Button x:Name="LaunchGame" Content="Launch"   Click="ButtonLaunchGame" RenderTransformOrigin="0.589,0.526" Foreground="{DynamicResource ButtonForegroundTextCommon}" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" HorizontalContentAlignment="Center" FontSize="16" Background="#FF009CFF" HorizontalAlignment="Left" Width="235"/>
-                <ComboBox Style="{DynamicResource StyleComboBoxChooseGameInLauncher}" x:Name="ComboBoxChooseGameInLauncher" HorizontalAlignment="Right" Width="59">
+                <Button Style="{DynamicResource StyleButtonInLauncherMainChooseGame}"  x:Name="LaunchGame" Content="Launch" Click="ButtonLaunchGame" RenderTransformOrigin="0.589,0.526" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" HorizontalContentAlignment="Center" FontSize="16" HorizontalAlignment="Left" Width="235"/>
+                <ComboBox Style="{DynamicResource StyleComboBoxChooseGameInLauncher}" x:Name="ComboBoxChooseGameInLauncher" HorizontalAlignment="Right" Width="59" IsEditable="True">
                     <ComboBoxItem>
                         <TextBlock x:Name="TextBlockInLauncherComboBoxChooseGame_SettingsGame" Text="Game settings" Style="{DynamicResource StyleTextBlockInLauncherComboBoxChooseGame}"/>
                     </ComboBoxItem>
