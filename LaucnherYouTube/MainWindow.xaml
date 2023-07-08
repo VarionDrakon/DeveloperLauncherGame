@@ -627,11 +627,10 @@
                     </ComboBoxItem>
                 </ComboBox>
                 <TextBlock Style="{DynamicResource StyleTextBlockInLauncherMainTextChooseGame}" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="Additional options" VerticalAlignment="Center" Height="12" Width="NaN" Margin="13,0,5,0" IsHitTestVisible="False"/>
-
             </Grid>
             <!--Banner In Launcher Button install and option-->
             <Grid Margin="10,0,3,58" Height="62" VerticalAlignment="Bottom">
-                <Button Style="{DynamicResource StyleButtonInLauncherMainChooseGame}"  x:Name="LaunchGame" Content="Launch" Click="ButtonLaunchGame" RenderTransformOrigin="0.589,0.526" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" HorizontalContentAlignment="Center" FontSize="16" HorizontalAlignment="Left" Width="235"/>
+                <Button Style="{DynamicResource StyleButtonInLauncherMainChooseGame}"  x:Name="LaunchGameButton" Content="Launch" Click="ButtonLaunchGame" RenderTransformOrigin="0.589,0.526" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" HorizontalContentAlignment="Center" FontSize="16" HorizontalAlignment="Left" Width="235"/>
                 <ComboBox x:Name="ComboBoxChooseGameInLauncher" Style="{DynamicResource StyleComboBoxChooseGameInLauncher}" SelectionChanged="ComboBoxChooseGameInLauncher_SelectionChanged" DropDownClosed="ComboBoxChooseGameInLauncher_DropDownClosed" HorizontalAlignment="Right" Width="59" IsEditable="True">
                     <ComboBoxItem>
                         <TextBlock x:Name="TextBlockInLauncherComboBoxChooseGame_SettingsGame" Text="Game settings" Style="{DynamicResource StyleTextBlockInLauncherComboBoxChooseGame}" />

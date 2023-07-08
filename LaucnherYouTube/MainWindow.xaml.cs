@@ -23,8 +23,7 @@ namespace LaucnherYouTube
     {
         private readonly string zipPath = @".\ChacheDownloadGame.zip";
         private readonly string appTemlPath = "tempDirectoryUnzip";
-        private readonly string xmlFile = "Assets/version.xml";
-        private string _stateLocateVersionXML;
+        private string _stateLocateVersionXML = "1.1";
         private string _stateServerVersionXML;
         private int? idProcessApp = null;
         private bool appIsStarting = false;
@@ -32,6 +31,7 @@ namespace LaucnherYouTube
         private bool isStartUnzipUpdateFileApp = true;
         private Process processApp;
         public static bool isActiveSettingWindow { get; set; } = false;
+        public static bool isActiveUpdateWindow { get; set; } = false;
         public static bool UserAllowUpdateApp { get; set; } = false;
         private DispatcherTimer dispatcherTimer;
         private Point scrollPointMouse = new Point();
@@ -43,6 +43,7 @@ namespace LaucnherYouTube
         WebClient clientDownloadApp = new WebClient();
         HttpClient httpClient = new HttpClient();
         Window settingsWindow;
+        Window allowUpdateWindow;
         public MainWindow()
         {
             AppDomain currentDomain = AppDomain.CurrentDomain;
@@ -53,24 +54,8 @@ namespace LaucnherYouTube
             UpdateUI();
             ServerXMLDownload();
             UpdateContentSever();
-            LocateVersionXML();
         }
         #region XMLREAD
-        private void LocateVersionXML()
-        {
-            XmlReader reader = XmlReader.Create(xmlFile);
-            while (reader.Read())
-            {
-                if (reader.NodeType == XmlNodeType.Element)
-                {
-                    if (reader.Name == "Main")
-                    {
-                        reader.ReadToFollowing("version");
-                        _stateLocateVersionXML = reader.ReadElementContentAsString();
-                    }
-                }
-            }
-        }
         public async void ServerXMLDownload()
         {
             try
@@ -88,7 +73,6 @@ namespace LaucnherYouTube
             catch
             {
                 ServerConnecting.Text = "SERVER OFFLINE!";
-                //ButtonInLauncher_CheckUpdate.IsEnabled = false;
             }
         }
         private void CompleteDownloadVersionXMLServer(object sender, AsyncCompletedEventArgs e)
@@ -123,7 +107,7 @@ namespace LaucnherYouTube
         {
             dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(BackgroundUIFunction);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 2);
             dispatcherTimer.Start();
         }
         private void ButtonCancelDownloadApp(object sender, RoutedEventArgs e)
@@ -137,7 +121,6 @@ namespace LaucnherYouTube
             {
                 DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text = "State: " + ex.Message.ToString());
             }
-           // ButtonInLauncher_ReinstallApp.IsEnabled = true;
             ButtonInLauncher_StopDownloadGame.IsEnabled = false;
         }
         private void ButtonLaunchGame(object sender, RoutedEventArgs rea)
@@ -150,7 +133,6 @@ namespace LaucnherYouTube
                 processApp.StartInfo.Arguments = ArgumentsAppString;
                 processApp.Start();
                 idProcessApp = processApp.Id;
-                //ButtonInLauncher_KillStartedGame.IsEnabled = true;
             }
             catch (Exception e)
             {
@@ -191,17 +173,14 @@ namespace LaucnherYouTube
         {
             if (_stateLocateVersionXML != _stateServerVersionXML & checkUpdate == true)
             {
-                //ButtonInLauncher_CheckUpdate.IsEnabled = true;
                 checkUpdate = false;
             }
             if (UserAllowUpdateApp == true)
             {
-              //  ButtonInLauncher_CheckUpdate.IsEnabled = false;
                 ServerDownloadChacheGameAsync();
                 UserAllowUpdateApp = false;
             }
             ProgressBarExtractFile.Minimum = 0;
-            //_textCurrentVersion.Text = "Current version: " + _stateLocateVersionXML;
             _textServerVersion.Text = "Server version: " + _stateServerVersionXML;
             Process[] processedUsers = Process.GetProcesses();
             foreach (Process allprocessed in processedUsers)
@@ -216,9 +195,13 @@ namespace LaucnherYouTube
             if (appIsStarting == false)
             {
                 AppState.Text = "App is not starting!";
+                LaunchGameButton.IsEnabled = true;
+                LaunchGameButton.Content = "Launch";
             }
             else
             {
+                LaunchGameButton.IsEnabled = false;
+                LaunchGameButton.Content = "Game is run";
                 AppState.Text = "App is starting!";
             }
         }
@@ -459,7 +442,6 @@ namespace LaucnherYouTube
                     {
                         processApp.Kill();
                         processApp.Dispose();
-                        //ButtonInLauncher_KillStartedGame.IsEnabled = false;
                     }
                     ComboBoxChooseGameInLauncherAddOptions.SelectedIndex = -1;
                     break;
@@ -468,8 +450,12 @@ namespace LaucnherYouTube
                     ComboBoxChooseGameInLauncherAddOptions.SelectedIndex = -1;
                     break;
                 case 2:
-                    AllowUpdate allowUpdateWindow = new AllowUpdate();
-                    allowUpdateWindow.Show();
+                    if (isActiveUpdateWindow == false)
+                    {
+                        allowUpdateWindow = new AllowUpdate();
+                        isActiveUpdateWindow = true;
+                        allowUpdateWindow.Show();
+                    }
                     ComboBoxChooseGameInLauncherAddOptions.SelectedIndex = -1;
                     break;
             }

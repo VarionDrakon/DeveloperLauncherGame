@@ -23,12 +23,14 @@ namespace LaucnherYouTube.ChildWindow
         private void ButtonAllowUpdate(object sender, RoutedEventArgs e)
         {
             MainWindow.UserAllowUpdateApp = true;
-            Hide();
+            MainWindow.isActiveUpdateWindow = false;
+            Close();
         }
 
         private void ButtonNoAllowUpdate(object sender, RoutedEventArgs e)
         {
-            Hide();
+            MainWindow.isActiveUpdateWindow = false;
+            Close();
         }
     }
 }
