@@ -9,7 +9,6 @@ namespace LaucnherYouTube.ChildWindow
     /// </summary>
     public partial class SettingsWindow : Window
     {
-        private MainWindow mainWindow = new MainWindow();
         public SettingsWindow()
         {
             InitializeComponent();
@@ -33,8 +32,8 @@ namespace LaucnherYouTube.ChildWindow
 
         private void CloseApp_Click(object sender, RoutedEventArgs e)
         {
+            MainWindow.isActiveSettingWindow = false;
             Close();
-            mainWindow.IsOpenWindowSetting = false;
         }
 
         private void Image_MouseDown(object sender, MouseButtonEventArgs e)

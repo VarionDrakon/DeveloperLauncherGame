@@ -31,18 +31,18 @@ namespace LaucnherYouTube
         private bool checkUpdate = true;
         private bool isStartUnzipUpdateFileApp = true;
         private Process processApp;
+        public static bool isActiveSettingWindow { get; set; } = false;
         public static bool UserAllowUpdateApp { get; set; } = false;
         private DispatcherTimer dispatcherTimer;
         private Point scrollPointMouse = new Point();
         private double speedScrollHorizontalOffset = 0.3;
         private Stopwatch stopWatch = new Stopwatch();
-        public bool IsOpenWindowSetting = false;
         public static string ArgumentsAppString { get; set; }
         public static int ArgumentsAppSpeedDownload { get; set; } = 81920;
 
         WebClient clientDownloadApp = new WebClient();
         HttpClient httpClient = new HttpClient();
-
+        Window settingsWindow;
         public MainWindow()
         {
             AppDomain currentDomain = AppDomain.CurrentDomain;
@@ -389,11 +389,11 @@ namespace LaucnherYouTube
         #endregion
         private void OpenSettingsWindiowButton_Click(object sender, RoutedEventArgs e)
         {
-            SettingsWindow settingsWindow = new SettingsWindow();
-            if (IsOpenWindowSetting == false)
+            if (isActiveSettingWindow == false)
             {
+                settingsWindow = new SettingsWindow();
+                isActiveSettingWindow = true;
                 settingsWindow.Show();
-                IsOpenWindowSetting = true;
             }
         }
         private bool ComboBoxChooseGameInLauncherHandle = true;
@@ -414,7 +414,6 @@ namespace LaucnherYouTube
             switch (ComboBoxChooseGameInLauncher.SelectedIndex)
             {
                 case 0:
-                    Close();
                     ComboBoxChooseGameInLauncher.SelectedIndex = -1;
                     break;
                 case 1:
