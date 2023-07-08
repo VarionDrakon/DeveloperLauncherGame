@@ -600,7 +600,7 @@
             <!--BannerInLauncherMainChooseGame-->
             <Grid Height="243" VerticalAlignment="Bottom" Margin="0,0,0,13">
                 <TextBlock Style="{DynamicResource StyleTextBlockInLauncherMainTextChooseGame}" x:Name="TextBlockInLauncherComboBoxChooseGame_CurrentVersion" Margin="10,21,0,0" Text="Current Version: "/>
-                <TextBlock Style="{DynamicResource StyleTextBlockInLauncherMainTextChooseGame}" x:Name="_textServerVersion" Margin="10,0,0,0" Text="Server version: "/>
+                <TextBlock Style="{DynamicResource StyleTextBlockInLauncherMainTextChooseGame}" x:Name="TextBlockInLauncherComboBoxChooseGame_ServerVersion" Margin="10,0,0,0" Text="Server version: "/>
                 <TextBlock Style="{DynamicResource StyleTextBlockInLauncherMainTextChooseGame}" x:Name="AppState" Margin="10,49,0,0" Text="Initializing game..."/>
                 <TextBlock Style="{DynamicResource StyleTextBlockInLauncherMainTextChooseGame}" x:Name="SendersArgumentsTextBlock" Margin="10,75,0,0" Text="Arguments for app:" Height="36" />
                 <TextBlock Style="{DynamicResource StyleTextBlockInLauncherMainTextChooseGame}" x:Name="DownloadAppState" Margin="13,203,30,10" Text="Initialize update..." Panel.ZIndex="1" Height="NaN" Width="NaN" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>

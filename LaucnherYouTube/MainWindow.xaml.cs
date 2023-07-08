@@ -51,6 +51,7 @@ namespace LaucnherYouTube
 
             InitializeComponent();
 
+            TextBlockInLauncherComboBoxChooseGame_CurrentVersion.Text = "Version app: " + _stateLocateVersionXML;
             UpdateUI();
             ServerXMLDownload();
             UpdateContentSever();
@@ -167,6 +168,94 @@ namespace LaucnherYouTube
                 ScrollViewerContent.ScrollToHorizontalOffset(speedScrollHorizontalOffset + (scrollPointMouse.X - e.GetPosition(ScrollViewerContent).X));
             }
         }
+        private void OpenSettingsWindiowButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (isActiveSettingWindow == false)
+            {
+                settingsWindow = new SettingsWindow();
+                isActiveSettingWindow = true;
+                settingsWindow.Show();
+            }
+        }
+        private bool ComboBoxChooseGameInLauncherHandle = true;
+        private void ComboBoxChooseGameInLauncher_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (ComboBoxChooseGameInLauncherHandle) ComboBoxChooseGameInLauncher_Handle();
+            ComboBoxChooseGameInLauncherHandle = true;
+        }
+        private void ComboBoxChooseGameInLauncher_DropDownClosed(object sender, EventArgs e)
+        {
+            ComboBox ComboBoxChooseGameInLauncher = sender as ComboBox;
+            ComboBoxChooseGameInLauncherHandle = !ComboBoxChooseGameInLauncher.IsDropDownOpen;
+            ComboBoxChooseGameInLauncher_Handle();
+        }
+        private void ComboBoxChooseGameInLauncher_Handle()
+        {
+            switch (ComboBoxChooseGameInLauncher.SelectedIndex)
+            {
+                case 0:
+                    ComboBoxChooseGameInLauncher.SelectedIndex = -1;
+                    break;
+                case 1:
+                    Process.Start(@".\");
+                    ComboBoxChooseGameInLauncher.SelectedIndex = -1;
+                    break;
+                case 2:
+                    ComboBoxChooseGameInLauncher.SelectedIndex = -1;
+                    break;
+                case 3:
+                    ComboBoxChooseGameInLauncher.SelectedIndex = -1;
+                    break;
+                case 4:
+                    ComboBoxChooseGameInLauncher.SelectedIndex = -1;
+                    break;
+                case 5:
+                    ComboBoxChooseGameInLauncher.SelectedIndex = -1;
+                    break;
+                case 6:
+                    ComboBoxChooseGameInLauncher.SelectedIndex = -1;
+                    break;
+            }
+        }
+        private bool ComboBoxChooseGameInLauncherAddOptionsHandle = true;
+        private void ComboBoxChooseGameInLauncherAddOptions_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (ComboBoxChooseGameInLauncherAddOptionsHandle) ComboBoxChooseGameInLauncherAddOptions_Handle();
+            ComboBoxChooseGameInLauncherAddOptionsHandle = true;
+        }
+        private void ComboBoxChooseGameInLauncherAddOptions_DropDownClosed(object sender, EventArgs e)
+        {
+            ComboBox ComboBoxChooseGameInLauncherAddOptions = sender as ComboBox;
+            ComboBoxChooseGameInLauncherAddOptionsHandle = !ComboBoxChooseGameInLauncherAddOptions.IsDropDownOpen;
+            ComboBoxChooseGameInLauncherAddOptions_Handle();
+        }
+        private void ComboBoxChooseGameInLauncherAddOptions_Handle()
+        {
+            switch (ComboBoxChooseGameInLauncherAddOptions.SelectedIndex)
+            {
+                case 0:
+                    if (appIsStarting == true)
+                    {
+                        processApp.Kill();
+                        processApp.Dispose();
+                    }
+                    ComboBoxChooseGameInLauncherAddOptions.SelectedIndex = -1;
+                    break;
+                case 1:
+                    ServerDownloadChacheGameAsync();
+                    ComboBoxChooseGameInLauncherAddOptions.SelectedIndex = -1;
+                    break;
+                case 2:
+                    if (isActiveUpdateWindow == false)
+                    {
+                        allowUpdateWindow = new AllowUpdate();
+                        isActiveUpdateWindow = true;
+                        allowUpdateWindow.Show();
+                    }
+                    ComboBoxChooseGameInLauncherAddOptions.SelectedIndex = -1;
+                    break;
+            }
+        }
         #endregion
         #region BACKGROUNDFUNC
         public void BackgroundUIFunction(object sender, EventArgs ea)
@@ -181,7 +270,7 @@ namespace LaucnherYouTube
                 UserAllowUpdateApp = false;
             }
             ProgressBarExtractFile.Minimum = 0;
-            _textServerVersion.Text = "Server version: " + _stateServerVersionXML;
+            TextBlockInLauncherComboBoxChooseGame_ServerVersion.Text = "Server version: " + _stateServerVersionXML;
             Process[] processedUsers = Process.GetProcesses();
             foreach (Process allprocessed in processedUsers)
             {
@@ -370,95 +459,5 @@ namespace LaucnherYouTube
             broochButtonContentServer_Content6.Background = brushContentServer;
         }
         #endregion
-        private void OpenSettingsWindiowButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (isActiveSettingWindow == false)
-            {
-                settingsWindow = new SettingsWindow();
-                isActiveSettingWindow = true;
-                settingsWindow.Show();
-            }
-        }
-        private bool ComboBoxChooseGameInLauncherHandle = true;
-        private void ComboBoxChooseGameInLauncher_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            if (ComboBoxChooseGameInLauncherHandle) ComboBoxChooseGameInLauncher_Handle();
-            ComboBoxChooseGameInLauncherHandle = true;
-        }
-
-        private void ComboBoxChooseGameInLauncher_DropDownClosed(object sender, EventArgs e)
-        {
-            ComboBox ComboBoxChooseGameInLauncher = sender as ComboBox;
-            ComboBoxChooseGameInLauncherHandle = !ComboBoxChooseGameInLauncher.IsDropDownOpen;
-            ComboBoxChooseGameInLauncher_Handle();
-        }
-        private void ComboBoxChooseGameInLauncher_Handle()
-        {
-            switch (ComboBoxChooseGameInLauncher.SelectedIndex)
-            {
-                case 0:
-                    ComboBoxChooseGameInLauncher.SelectedIndex = -1;
-                    break;
-                case 1:
-                    Process.Start(@".\");
-                    ComboBoxChooseGameInLauncher.SelectedIndex = -1;
-                    break;
-                case 2:
-                    ComboBoxChooseGameInLauncher.SelectedIndex = -1;
-                    break;
-                case 3:
-                    ComboBoxChooseGameInLauncher.SelectedIndex = -1;
-                    break;
-                case 4:
-                    ComboBoxChooseGameInLauncher.SelectedIndex = -1;
-                    break;
-                case 5:
-                    ComboBoxChooseGameInLauncher.SelectedIndex = -1;
-                    break;
-                case 6:
-                    ComboBoxChooseGameInLauncher.SelectedIndex = -1;
-                    break;
-            }
-        }  
-        private bool ComboBoxChooseGameInLauncherAddOptionsHandle = true;
-        private void ComboBoxChooseGameInLauncherAddOptions_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            if (ComboBoxChooseGameInLauncherAddOptionsHandle) ComboBoxChooseGameInLauncherAddOptions_Handle();
-            ComboBoxChooseGameInLauncherAddOptionsHandle = true;
-        }
-
-        private void ComboBoxChooseGameInLauncherAddOptions_DropDownClosed(object sender, EventArgs e)
-        {
-            ComboBox ComboBoxChooseGameInLauncherAddOptions = sender as ComboBox;
-            ComboBoxChooseGameInLauncherAddOptionsHandle = !ComboBoxChooseGameInLauncherAddOptions.IsDropDownOpen;
-            ComboBoxChooseGameInLauncherAddOptions_Handle();
-        }
-        private void ComboBoxChooseGameInLauncherAddOptions_Handle()
-        {
-            switch (ComboBoxChooseGameInLauncherAddOptions.SelectedIndex)
-            {
-                case 0:
-                    if (appIsStarting == true)
-                    {
-                        processApp.Kill();
-                        processApp.Dispose();
-                    }
-                    ComboBoxChooseGameInLauncherAddOptions.SelectedIndex = -1;
-                    break;
-                case 1:
-                    ServerDownloadChacheGameAsync();
-                    ComboBoxChooseGameInLauncherAddOptions.SelectedIndex = -1;
-                    break;
-                case 2:
-                    if (isActiveUpdateWindow == false)
-                    {
-                        allowUpdateWindow = new AllowUpdate();
-                        isActiveUpdateWindow = true;
-                        allowUpdateWindow.Show();
-                    }
-                    ComboBoxChooseGameInLauncherAddOptions.SelectedIndex = -1;
-                    break;
-            }
-        }
     }
 }
