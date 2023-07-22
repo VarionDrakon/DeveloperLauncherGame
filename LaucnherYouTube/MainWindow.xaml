@@ -545,6 +545,56 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="FocusVisual11">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!--StyleButtonInLauncherMainHeaderBar-->
+        <SolidColorBrush x:Key="Button.Static.Background10" Color="#00DDDDDD"/>
+        <SolidColorBrush x:Key="Button.Static.Border10"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background10" Color="#4C0085DA"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background10" Color="#FF0069AB"/>
+        <SolidColorBrush x:Key="Button.Static.Foreground8" Color="#FF4092A2"/>
+        <Style x:Key="StyleButtonInLauncherMainHeaderBar" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual11}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background10}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border10}"/>
+            <Setter Property="Foreground" Value="{StaticResource Button.Static.Foreground8}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Width" Value="25"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background10}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background10}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <!--Next comes the markup-->
     <Grid Margin="0,0,0,0" Background="#FF0A0B17">
@@ -582,10 +632,10 @@
                 </Button>
             </Grid>
             <!--Button control header app-->
-            <Grid Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" Width="50">
-                <Button x:Name="CloseApp" Content="X" Background="#00DDDDDD" Foreground="#FF4092A2" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" HorizontalAlignment="Right" Width="18" Height="18" VerticalAlignment="Top" Click="CloseApp_Click"/>
-                <Button x:Name="RollUpApp" Content="_" Margin="0,0,32,0" VerticalAlignment="Top" Background="#00DDDDDD" Height="18" Foreground="#FF4092A2" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" HorizontalAlignment="Right" Width="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" FontSize="11" Click="RollUpApp_Click" Focusable="False"/>
-                <Button x:Name="UnwrapApp" Content="=" Margin="0,0,18,0" VerticalAlignment="Top"   Background="#00DDDDDD" Height="18" Foreground="#FF4092A2" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" HorizontalAlignment="Right" Width="18" Click="UnwrapApp_Click"/>
+            <Grid Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Width="76">
+                <Button  x:Name="CloseApp"  Style="{DynamicResource StyleButtonInLauncherMainHeaderBar}" Content="X"  BorderBrush="{DynamicResource ButtonBorderBrushCommon}" Click="CloseApp_Click"/>
+                <Button  x:Name="RollUpApp" Style="{DynamicResource StyleButtonInLauncherMainHeaderBar}" Content="_" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" Click="RollUpApp_Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Button x:Name="UnwrapApp"  Style="{DynamicResource StyleButtonInLauncherMainHeaderBar}" Content="=" BorderBrush="{DynamicResource ButtonBorderBrushCommon}" Click="UnwrapApp_Click" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
             <!--BannerInLauncher listen app-->
             <Grid Height="47" VerticalAlignment="Bottom" Margin="0,0,0,10">

@@ -61,6 +61,10 @@ namespace LaucnherYouTube
         {
             try
             {
+                if (Directory.Exists("assets") == false)
+                {
+                    Directory.CreateDirectory("assets");
+                }
                 HttpClient serverClient = new HttpClient();
                 var responseServerClient = await serverClient.GetAsync(new Uri("https://raw.githubusercontent.com"));
                 if (responseServerClient.IsSuccessStatusCode)
@@ -322,8 +326,6 @@ namespace LaucnherYouTube
             ButtonInLauncher_StopDownloadGame.IsEnabled = true;
             try
             {
-                //ButtonInLauncher_ReinstallApp.IsEnabled = false;
-                //ButtonInLauncher_CheckUpdate.IsEnabled = false;
                 if (cancelTokenSource == null || cancelTokenSource.IsCancellationRequested)
                 {
                     cancelTokenSource = new CancellationTokenSource();
@@ -349,8 +351,6 @@ namespace LaucnherYouTube
                     catch (Exception e)
                     {
                         DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text = "State: " + e.Message.ToString());
-                       // ButtonInLauncher_ReinstallApp.Dispatcher.Invoke(() => ButtonInLauncher_ReinstallApp.IsEnabled = true);
-                      //  ButtonInLauncher_CheckUpdate.Dispatcher.Invoke(() => ButtonInLauncher_CheckUpdate.IsEnabled = true);
                         cancelTokenSource.Dispose();
                         streamFileServer.Dispose();
                         fileStreamServer.Dispose();
@@ -405,8 +405,6 @@ namespace LaucnherYouTube
                     }
                     DownloadAppState.Dispatcher.Invoke(() => DownloadAppState.Text = "Game install!");
                     ProgressBarExtractFile.Dispatcher.Invoke(() => ProgressBarExtractFile.Value = 0);
-                    //ButtonInLauncher_ReinstallApp.Dispatcher.Invoke(() => ButtonInLauncher_ReinstallApp.IsEnabled = true);
-                   // ButtonInLauncher_CheckUpdate.Dispatcher.Invoke(() => ButtonInLauncher_CheckUpdate.IsEnabled = true);
                     return;
                 }, cancellationToken);
             }
